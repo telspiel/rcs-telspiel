@@ -31,29 +31,13 @@ export class AddBlackListComponent {
   fileList: NzUploadFile[] = [];
   searchContactNumber: string = "";
   searchContactName: string = "";
-   uploading = false;
 
   groupForm!: FormGroup;
   selectedGroup: any;
- beforeUpload = (file: NzUploadFile): boolean => {
-    // Validate file type
-    const isCsv = file.type === 'text/csv' || file.name.endsWith('.csv');
-    if (!isCsv) {
-      this.toastService.publishNotification(
-        'error',
-        'Only .csv files are allowed!',
-        'error'
-      );
-      return false; // Reject non-CSV files
-    }
-    this.fileList = [{
-      uid: file.uid,
-      name: file.name,
-      status: 'done', // Set status to 'done' to avoid red color and error tooltip
-      originFileObj: file.originFileObj || (file as any), // Ensure originFileObj is set
-    }];
-
-    return false; // Prevent default upload (handle in handleUpload)
+  beforeUpload = (file: NzUploadFile): boolean => {
+    console.log(file)
+    this.fileList = this.fileList.concat(file);
+    return false;
   };
   uploadbutton: boolean = false;
   constructor(
@@ -208,46 +192,44 @@ export class AddBlackListComponent {
     const username = sessionStorage.getItem('USER_NAME') ?? '';
     const description = this.uploadForm.get('description')?.value || '';
 
-    formData.append('file', file);
-    formData.append('userName', username);
-    formData.append('fileType', file.type || 'text/csv'); // Fallback to 'text/csv' if type is undefined
-    formData.append('description', description);
+    formData.append("file", file);
+    formData.append("userName", username);
+    formData.append("fileType", file.type);
+    formData.append("description", this.uploadForm.get("description")?.value);
+
+    // formData.append('groupId', this.groups.get('groupName')?.value);
 
     this.blackListService.uploadNumber(formData).subscribe(
       (response) => {
-        console.log('Upload response:', response);
-        if (response.result === 'Failure') {
+        console.log(response)
+        if (response.result === "Failure") {
           this.uploadbutton = false;
           this.toastService.publishNotification(
-            'error',
+            "error",
             response.message,
-            'error'
+            "error"
           );
-        } else if (response.result === 'Success') {
-          this.toastService.publishNotification(
-            'success',
-            response.message,
-            'success'
-          );
+        }
+        if (response.result === "Success") {
+          this.toastService.publishNotification("success", response.message, "success");
           this.uploadbutton = false;
           this.uploadForm.reset();
-          this.fileList = []; // Clear file list on success
+          this.fileList = [];
         }
       },
       (error) => {
-        console.error('Upload error:', error);
         this.uploadbutton = false;
         this.toastService.publishNotification(
-          'error',
-          'Internal Server Error',
-          'error'
+          "error",
+          "Internal Server Error",
+          "error"
         );
       }
     );
+    // } else {
+    //   // this.message.error('Please select a group and upload a file');
+    // }
   }
-
-
-  
   validateNumberInput(event: KeyboardEvent): void {
     const charCode = event.which ? event.which : event.keyCode;
     // Allow only digits (0-9)
@@ -323,7 +305,6 @@ export class AddBlackListComponent {
 
   clearUploadForm(): void {
     this.fileList = [];
-    this.uploadForm.reset();
     this.selectedGroupForUpload = "";
     this.toastShown = false;
   }
@@ -367,23 +348,20 @@ export class AddBlackListComponent {
       next: (response) => {
         console.log("Number added Blacklist:", response);
 
-        if (response.result === "Failure") {
+        if (response.result === "Success") {
           // this.loadGroups();
           //  this.loadList();
           this.toastService.publishNotification(
-            "error",
-            response.message,
-            "error"
-          );
-        } else {
-        
-           this.toastService.publishNotification(
             "success",
             response.message || "Number added successfully"
           );
-           this.groupForm.reset();
+          this.groupForm.reset();
+        } else {
+          this.toastService.publishNotification(
+            "error",
+            response.message || "Failed to add number"
+          );
         }
-
       },
       error: (err) => {
         console.error("API Error:", err);

@@ -143,6 +143,8 @@ operators : any []=[];
   // isNewBot: [true, Validators.required],
   traficVolume: [{ value: 100, disabled: true }],
   operatorBotId: [{ value: '', disabled: true }],
+  operatorTemplateSecret : [{ value: '', disabled: true }],
+  operatorTemplateClientId : [{ value: '', disabled: true }],
   operatorBotSecret: [{ value: '', disabled: true }],
   operatorBotStatus: [{ value: 'LAUNCHED', disabled: true }]
               })
@@ -274,6 +276,8 @@ this.operatorForm.patchValue({
     isNewBot: op.isNewBot ?? false,
     traficVolume: op.trafficVolume || '',
     operatorBotId: op.operatorBotId || '',
+    operatorTemplateSecret : op.operatorTemplateSecret || '',
+    operatorTemplateClientId : op.operatorTemplateClientId || '',
     operatorBotSecret: op.operatorBotSecret || '',
     operatorBotStatus: op.operatorBotStatus || '',
   }))
@@ -291,6 +295,8 @@ operatorData.forEach((op: any) => {
       isNewBot: [op.isNewBot ?? false, Validators.required],
       traficVolume: [op.trafficVolume || '', Validators.required],
       operatorBotId: [op.operatorBotId || ''],
+      operatorTemplateSecret : [op.operatorTemplateSecret || ''],
+      operatorTemplateClientId : [ op.operatorTemplateClientId || ''],
       operatorBotSecret: [op.operatorBotSecret || ''],
       operatorBotStatus: [op.operatorBotStatus || ''],
     })
@@ -586,6 +592,7 @@ this.botService.viewtps(this.operator).subscribe(
   (res: any) => {
     const selectedOperators = res.data[0]?.selectedOperators || [];
    const operatorBotId = res.data[0]?.operatorBotId || '';
+   const operatorTemplateClientId = res.data[0]?.operatorTemplateClientId || '';
    const operatorBotSecret = res.data[0]?.operatorBotSecret || '';
    const operatorBotStatus = res.data[0]?.operatorBotStatus || '';
    console.log("Selected operators:", selectedOperators);

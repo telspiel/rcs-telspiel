@@ -39,8 +39,8 @@ $final-color: #{$theme-color}#{$alpha};
     scroll-behavior: smooth;
     //scroll-padding-bottom: 100px;
     height: auto;
-    max-height: 70%;
-    min-height: 50%;
+    max-height: 60%;
+    min-height: 50%; 
 }
 // main-layout.component.scss
 ::ng-deep .ant-layout-header {

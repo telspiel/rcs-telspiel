@@ -85,7 +85,7 @@
               formControlName="UserName"
               placeholder="UserName"
               autocomplete="disabled"
-              (change)="checkavailability()"
+              (blur)="checkavailability()"
             />
           </nz-form-control>
         </nz-form-item>
@@ -103,13 +103,13 @@
               emailExists ? '*Email already exists' : '*Email Required'
             "
             [nzValidateStatus]="getStatus('email')!"
-            (change)="checkavailability()"
           >
             <input
               id="email"
               nz-input
               formControlName="email"
               placeholder="Email"
+              (blur)="checkavailability()"
             />
           </nz-form-control>
         </nz-form-item>
@@ -375,7 +375,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
-      <div nz-col [nzSpan]="12">
+      <!-- <div nz-col [nzSpan]="12">
         <nz-form-item>
           <nz-form-label [nzSpan]="8" nzLabelAlign="left" for="is2FARequid"
             >Two Factor Auth<span style="color: red">*</span></nz-form-label
@@ -387,7 +387,7 @@
             </nz-radio-group>
           </nz-form-control>
         </nz-form-item>
-      </div>
+      </div> -->
       <div nz-col [nzSpan]="12">
         <nz-form-item>
           <nz-form-label

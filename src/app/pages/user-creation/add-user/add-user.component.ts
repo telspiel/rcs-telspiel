@@ -107,10 +107,13 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
     traffictype: [""],
     Status: [""],
     plan: [""],
-    mobile: ["", [
-      Validators.required,
-      Validators.pattern(/^[\d+]+$/) // Only digits and plus sign allowed
-    ]],
+    mobile: [
+      "",
+      [
+        Validators.required,
+        Validators.pattern(/^\+?[1-9]\d{9,14}$/) // Allows optional +, starts with non-zero, 10-15 digits, no spaces
+      ]
+    ],
     account: [""],
     Client: [""],
     Department: [""],
@@ -123,6 +126,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
     creditRefund:[false],
     messageExpiry:[false],
     dlrHandover:[false],
+    isBlackListAllowed:["No"],
     dlrCallbackApiMethod:["GET"],
     dlrCallbackUrl:[""],
     dlrRequestBodyType:["Default"],
@@ -180,7 +184,6 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   updateColorCode(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     this.selectedColor = inputElement.value;
-    this.addUserForm.get('Themecolor')?.setValue(this.selectedColor);
   }
   randomPassword(length: number): string {
     const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -241,7 +244,32 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   onSubmit() {
     if (this.addUserForm.invalid) {
       this.addUserForm.markAllAsTouched();
-      this.toastService.publishNotification("Please fill all the required fields", "error", "error");
+      const controls = this.addUserForm.controls;
+      let errorMessages: string[] = [];
+      Object.keys(controls).forEach(key => {
+        const control = controls[key];
+        if (control.invalid) {
+          if (control.errors?.['required']) {
+            errorMessages.push(`${key} is required`);
+          }
+          if (control.errors?.['email']) {
+            errorMessages.push(`Invalid email format`);
+          }
+          if (control.errors?.['pattern']) {
+            errorMessages.push(`${key} has invalid format`);
+          }
+          if (control.errors?.['incorrect']) {
+            errorMessages.push(`${key} already exists`);
+          }
+        }
+      });
+      if (errorMessages.length > 0) {
+        errorMessages.forEach(msg => {
+          this.toastService.publishNotification(msg, "error", "error");
+        });
+      } else {
+        this.toastService.publishNotification("Please fill all the required fields", "error", "error");
+      }
       return;
     }
     // Check if username or email already exists before proceeding
@@ -281,6 +309,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
       is2FARequid: this.addUserForm.value.is2FARequid,
       creditRefund: this.addUserForm.value.creditRefund,
       dlrHandover:this.addUserForm.value.dlrHandover,
+      isBlackListAllowed:this.addUserForm.value.isBlackListAllowed,
       dlrCallbackApiMethod:this.addUserForm.value.dlrCallbackApiMethod,
       dlrCallbackUrl:this.addUserForm.value.dlrCallbackUrl,
       dlrRequestBodyType:this.addUserForm.value.dlrRequestBodyType,

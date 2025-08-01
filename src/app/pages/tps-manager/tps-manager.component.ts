@@ -26,7 +26,6 @@ export class TpsManagerComponent {
     { name: "AIRTEL", label: "AIRTEL" },
     { name: "VODAFONE", label: "VODAFONE" },
     { name: "RELIANCE_JIO", label: "RELIANCE JIO" },
-    { name: "Vi", label: "VI" },
     { name: "BSNL", label: "BSNL" },
     { name: "Jio_CX", label: "RELIANCE JIO CX" },
   ];
@@ -169,8 +168,8 @@ export class TpsManagerComponent {
         this.fb.group({
           operatorName: [op],
           tps: ["", Validators.required],
-          clientId: [""],
-          clientSecret:[""]
+          // clientId: [""],
+          // clientSecret:[""]
         })
       );
     });

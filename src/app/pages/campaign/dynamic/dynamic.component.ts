@@ -1853,17 +1853,7 @@ open(): void {
   }
 
   onSubmit() {
-   
-
-
-    if (this.isSubmitting) {
-      this.toastService.publishNotification(
-        'error',
-        'A submission is already in progress. Please wait.',
-        'Submission Error'
-      );
-      return;
-    }
+  
 
     if (this.quickCampaign.invalid) {
       this.quickCampaign.markAllAsTouched();
@@ -1962,9 +1952,9 @@ if (formValues.selectvariablecolumn === 'Y') {
           this.ngxLoader.stop(); // ✅ Stop loader
           this.toastService.publishNotification(
             "error",
-            err.error,
-            "Try After Some Time"
-          );
+            err.error.message || err.error || "An error occurred",
+            "error"
+            );
           this.isDisabled = false;
         },
       });

@@ -515,7 +515,7 @@
 
 
               <nz-card [nzTitle]="operator.get('operatorName')?.value">
-                <div nz-row [nzGutter]="6" style="display: flex; flex-wrap: wrap; align-items: center; gap:10px">
+                <div nz-row [nzGutter]="8" style="display: flex; flex-wrap: wrap; align-items: center; gap:10px">
                   <nz-form-item nz-col [nzSpan]="5"
                     *ngIf="(operator.get('operatorName')?.value)">
 
@@ -537,6 +537,36 @@
                     </nz-form-control>
                   </nz-form-item>
 
+                  
+                   <nz-form-item nz-col [nzSpan]="5"
+                    *ngIf="operator.get('isNewBot')?.value === false && ['VODAFONE','Vi'].includes(operator.get('operatorName')?.value)">
+                    <nz-form-label nzFor="operatorTemplateSecret">Template Secret</nz-form-label>
+                    <nz-form-control [nzErrorTip]="templateIdErrorTpl">
+                      <input nz-input formControlName="operatorTemplateSecret"  placeholder="Enter Template Secret" />
+                    </nz-form-control>
+                  </nz-form-item>
+
+                    <ng-template #templateIdErrorTpl let-control>
+  <ng-container *ngIf="control.hasError('required')">Template ID is required</ng-container>
+  <ng-container *ngIf="control.hasError('noSpaces')">Spaces are not allowed</ng-container>
+</ng-template>
+
+
+ <nz-form-item nz-col [nzSpan]="5"
+                    *ngIf="operator.get('isNewBot')?.value === false && ['VODAFONE','Vi'].includes(operator.get('operatorName')?.value)">
+                    <nz-form-label nzFor="operatorTemplateClientId">Client Id</nz-form-label>
+                    <nz-form-control [nzErrorTip]="templateIdErrorTpl">
+                      <input nz-input formControlName="operatorTemplateClientId"  placeholder="Enter Client Id" />
+                    </nz-form-control>
+                  </nz-form-item>
+
+                    <ng-template #templateSecretIdErrorTpl let-control>
+  <ng-container *ngIf="control.hasError('required')">Template Id is required</ng-container>
+  <ng-container *ngIf="control.hasError('noSpaces')">Spaces are not allowed</ng-container>
+</ng-template>
+
+
+
                   <nz-form-item nz-col [nzSpan]="5"
                     *ngIf="operator.get('isNewBot')?.value === false && operator.get('operatorName')">
                     <nz-form-label nzFor="botId">Bot Id</nz-form-label>
@@ -544,6 +574,9 @@
                       <input nz-input formControlName="operatorBotId"  placeholder="Enter Bot ID" />
                     </nz-form-control>
                   </nz-form-item>
+
+
+
                   <ng-template #botIdErrorTpl let-control>
   <ng-container *ngIf="control.hasError('required')">Bot ID is required</ng-container>
   <ng-container *ngIf="control.hasError('noSpaces')">Spaces are not allowed</ng-container>

@@ -35,7 +35,9 @@ export class HttpInterceptorInterceptor implements HttpInterceptor {
     // return next.handle(request);
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.error.Response.result==='Token Expired') { 
+
+        const err=error?.error?.Response?.result || ""
+        if (err==='Token Expired') { 
           
           this.authService.logoutUser(); 
            

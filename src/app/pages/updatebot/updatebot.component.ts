@@ -63,6 +63,8 @@ export class UpdatebotComponent {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   operatorBotId: any;
+  operatorTemplateSecret : any;
+  operatorTemplateClientId : any;
   operatorBotSecret: any;
   operatorBotStatus: any;
   logColor() {
@@ -327,6 +329,8 @@ loadImageFailed() {
     isNewBot: [true, Validators.required], 
     traficVolume: [100, Validators.required],
     operatorBotId: ['', [noSpaceRegexValidator]],
+    operatorTemplateSecret : ['', [noSpaceRegexValidator]],
+    operatorTemplateClientId : ['', [noSpaceRegexValidator]],
     operatorBotSecret: ['', [noSpaceRegexValidator]],
     operatorBotStatus: ['LAUNCHED']
           })
@@ -426,6 +430,8 @@ loadImageFailed() {
 this.selectedClient = response.data.botData.userName || '';
 
 
+
+
 this.validateForm.patchValue(formData);
 this.operatorForm.patchValue({
   selectedOperators: operatorData.map((op: any) => op.operatorName),
@@ -434,6 +440,8 @@ this.operatorForm.patchValue({
     isNewBot: op.isNewBot ?? false,
     traficVolume: op.trafficVolume || '',
     operatorBotId: op.operatorBotId || '',
+    operatorTemplateSecret : op.operatorTemplateSecret || '',
+    operatorTemplateClientId : op.operatorTemplateClientId || '',
     operatorBotSecret: op.operatorBotSecret || '',
     operatorBotStatus: op.operatorBotStatus || '',
   }))
@@ -448,6 +456,8 @@ operatorData.forEach((op: any) => {
       isNewBot: [op.isNewBot ?? false, Validators.required],
       traficVolume: [op.trafficVolume || '', Validators.required],
       operatorBotId: [op.operatorBotId || ''],
+      operatorTemplateSecret : [op.operatorTemplateSecret || ''],
+      operatorTemplateClientId :[op.operatorTemplateClientId || ''],
       operatorBotSecret: [op.operatorBotSecret || ''],
       operatorBotStatus: [op.operatorBotStatus || ''],
     })
@@ -733,6 +743,8 @@ const transformedOperatorData = rawOperatorData.map((op: any) => ({
   isNewBot: op.isNewBot ?? false,
   trafficVolume: op.traficVolume || 100,  // 👈 remap from form field
   operatorBotId: op.operatorBotId || '',
+  operatorTemplateSecret: op.operatorTemplateSecret || '',
+  operatorTemplateClientId: op.operatorTemplateClientId || '',
   operatorBotSecret: op.operatorBotSecret || '',
   operatorBotStatus: op.operatorBotStatus || 'LAUNCHED'
 }));
@@ -1056,6 +1068,8 @@ this.botService.viewtps(this.operator).subscribe(
   (res: any) => {
     const selectedOperators = res.data[0]?.selectedOperators || [];
    const operatorBotId = res.data[0]?.operatorBotId || '';
+   const operatorTemplateSecret = res.data[0]?.operatorTemplateSecret || '';
+   const operatorTemplateClientId = res.data[0]?.operatorTemplateClientId || '';
    const operatorBotSecret = res.data[0]?.operatorBotSecret || '';
    const operatorBotStatus = res.data[0]?.operatorBotStatus || '';
    console.log("Selected operators:", selectedOperators);
