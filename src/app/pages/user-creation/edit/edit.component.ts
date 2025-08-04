@@ -483,8 +483,6 @@ const formattedPriority =
   this.Reseller=event.reseller
   this.Seller=event.seller
   this.Admin=event.admin
-  console.log('Selected Client:', this.selectedClient);
-  console.log('Selected Reseller:', this.selectedReseller); 
   const value= this.client|| this.Reseller|| this.Seller || this.Admin
   this.getUserData(value)
 }
