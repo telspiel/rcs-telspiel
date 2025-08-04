@@ -203,20 +203,8 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   }
 
 
-  getUserData(Value:string, type:string) {
-      if(type=='reseller')
-      {
-        this.Seller = ""
-        this.client = ""
-      }
-      else if(type=='Seller'){
-        this.Reseller = ""
-        this.client = ""
-      }
-      else if (type=='client'){
-        this.Reseller = ""
-        this.Seller = ""
-      }
+  getUserData(Value:string) {
+      
       const username = {
         userName: Value
       }
@@ -306,4 +294,17 @@ if (user) {
     const inputElement = event.target as HTMLInputElement;
     this.selectedColor = inputElement.value;
   }
+
+
+  handleSelection(event: any): void {
+  console.log('User selection:', event);
+  this.client=event.client
+  this.Reseller=event.reseller
+  this.Seller=event.seller
+  this.Admin=event.admin 
+  const value= this.client|| this.Reseller|| this.Seller || this.Admin
+  this.getUserData(value)
+}
+
+
 }

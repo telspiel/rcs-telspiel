@@ -1,4 +1,4 @@
-
+<!-- 
 
 <form class="my" nz-row [nzGutter]="16"  nzAlign="middle" nzJustify="space-around" style="margin-bottom: 2rem; margin-top: 2rem; ">
     
@@ -44,9 +44,16 @@
             </nz-select>
         </nz-form-control>
     </div>
-</form>
+</form> -->
 
 
+
+
+<div style="margin-bottom: 2rem; margin-top: 2rem;" >
+
+<app-filter-dropdown [role]="role" (selectionChange)="handleSelection($event)"></app-filter-dropdown>
+
+</div>
 
 
 
@@ -538,19 +545,6 @@
             </nz-form-item>
         </div>
 
-          <div nz-col [nzSpan]="24">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="4" nzLabelAlign="left" for="isBlackListAllowed"
-            >Number Blacklist Allowed<span style="color: red">*</span></nz-form-label
-          >
-          <nz-form-control [nzSpan]="15" nzErrorTip="Select credit Refund">
-            <nz-radio-group id="isBlackListAllowed" formControlName="isBlackListAllowed">
-              <label nz-radio nzValue="No">No</label>
-              <label nz-radio nzValue="Yes">Yes</label>
-            </nz-radio-group>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
 
        <div nz-col [nzSpan]="12" *ngIf="updateForm.get('dlrHandover')?.value === true" >
   <nz-form-item>
@@ -588,6 +582,21 @@
             </nz-form-control>
             </nz-form-item>
         </div>
+
+        
+          <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" nzLabelAlign="left" for="isBlackListAllowed"
+            >Number Blacklist Allowed<span style="color: red">*</span></nz-form-label
+          >
+          <nz-form-control [nzSpan]="15" nzErrorTip="Select credit Refund">
+            <nz-radio-group id="isBlackListAllowed" formControlName="isBlackListAllowed">
+              <label nz-radio nzValue="No">No</label>
+              <label nz-radio nzValue="Yes">Yes</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
        
         
          <nz-form-control

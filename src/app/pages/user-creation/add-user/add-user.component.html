@@ -327,6 +327,7 @@
     </div>
   </div>
 
+
   <h5 style="margin-top: 2rem; font-weight: 900"></h5>
   <div
     nz-row
@@ -423,6 +424,20 @@
             <nz-radio-group id="dlrHandover" formControlName="dlrHandover">
               <label nz-radio [nzValue]="false">No</label>
               <label nz-radio [nzValue]="true">Yes</label>
+            </nz-radio-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+       <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" nzLabelAlign="left" for="dlrHandover"
+            >Number Blacklist Allowed<span style="color: red">*</span></nz-form-label
+          >
+          <nz-form-control [nzSpan]="15" nzErrorTip="Select credit Refund">
+            <nz-radio-group id="dlrHandover" formControlName="isBlackListAllowed">
+              <label nz-radio nzValue="No">No</label>
+              <label nz-radio nzValue="Yes">Yes</label>
             </nz-radio-group>
           </nz-form-control>
         </nz-form-item>

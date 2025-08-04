@@ -1,5 +1,7 @@
-
+<!-- 
 <form class="my" nz-row [nzGutter]="16"  nzAlign="middle" nzJustify="space-around" style="margin-bottom: 2rem; margin-top: 2rem; ">
+
+
     <div nz-col [nzSpan]="6" *ngIf="['superadmin'].includes(role)">
         
         <nz-form-control >
@@ -42,7 +44,14 @@
             </nz-select>
         </nz-form-control>
     </div>
-</form>
+</form> -->
+
+
+<div style="margin-bottom: 2rem; margin-top: 2rem;" >
+  
+<app-filter-dropdown [role]="role" (selectionChange)="handleSelection($event)"></app-filter-dropdown>
+</div>
+
 <div class="" *ngIf=" isView=='true' && client!='' || Reseller!='' || Seller!= '' || Admin!=''">
     <form nz-form   [formGroup]="viewForm" *ngIf="isView=='true'" >
         <h5 class="font-weight:900">User Details</h5>

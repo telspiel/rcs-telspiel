@@ -539,25 +539,26 @@ loadImageFailed() {
 
                 
                 this.suggestionsFormArray.clear();
-                res.carouselList.forEach((item: any, index: number) => {
-                  this.carouselList[index].cardTitle=item.cardTitle
-                  this.carouselList[index].cardDescription=item.cardDescription
-                  this.carouselList[index].mediaUrl=item.mediaUrl
-                  this.carouselList[index].suggestions = item.suggestions.map((suggestion: any) => ({
-                    suggestionType: suggestion.suggestionType,
-                    displayText: suggestion.displayText,
-                    postback: suggestion.postback,
-                    url: suggestion.url,
-                    phoneNumber: suggestion.phoneNumber,
-                    latitude: suggestion.latitude,
-                    longitude: suggestion.longitude,
-                    label: suggestion.label,
-                    query: suggestion.query,
-                    title: suggestion.title,
-                    description: suggestion.description,
-                    date: suggestion.date
-                  }));
-                });
+                this.carouselList = res.carouselList.map((item: any) => ({
+                cardTitle: item.cardTitle || "",
+                cardDescription: item.cardDescription || "",
+                mediaUrl: item.mediaUrl || "",
+                suggestions:
+                  item.suggestions?.map((suggestion: any) => ({
+                    suggestionType: suggestion.suggestionType || "",
+                    displayText: suggestion.displayText || "",
+                    postback: suggestion.postback || "",
+                    url: suggestion.url || "",
+                    phoneNumber: suggestion.phoneNumber || "",
+                    latitude: suggestion.latitude || null,
+                    longitude: suggestion.longitude || null,
+                    label: suggestion.label || "",
+                    query: suggestion.query || "",
+                    title: suggestion.title || "",
+                    description: suggestion.description || "",
+                    date: suggestion.date || "",
+                  })) || [],
+              }));
 
               }
             if(type === 'text_message'){

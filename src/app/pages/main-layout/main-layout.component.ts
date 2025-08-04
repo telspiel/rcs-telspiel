@@ -140,15 +140,15 @@ userAvailableBalance: number = 0;
       group:'capablityTest'
     },
 
-    {
-      label: "Domain Manager",
-      icon: "global",
-      link: "/domainManagerComponent",
-      roles: ["client", "admin", "seller", "reseller", "superadmin"],
-      exact:false,
-      group:'domain'
+    // {
+    //   label: "Domain Manager",
+    //   icon: "global",
+    //   link: "/domainManagerComponent",
+    //   roles: ["client", "admin", "seller", "reseller", "superadmin"],
+    //   exact:false,
+    //   group:'domain'
 
-    }, 
+    // }, 
        {
       label: "Group Management",
       icon: "group",
@@ -165,7 +165,7 @@ userAvailableBalance: number = 0;
       link: "/blacklist",
       roles: ["client"],
       exact:false,
-      group:'domain'
+      group:'black'
 
     },
 

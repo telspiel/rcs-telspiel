@@ -370,29 +370,29 @@ dlrDefaltBody="{'message_id':'#messageid#','sent_time':'#senttime#','dlr_time':'
     )
   }
 
-  getUserData(Value:string, type:string) {
+  getUserData(Value:string) {
 
-    if(type=='reseller')
-    {
-      this.Admin=""
-      this.Seller = ""
-      this.client = ""
-    }
-    else if(type=='seller'){
-      this.Reseller = ""
-      this.client = ""
-      this.Admin=""
-    }
-    else if (type=='client'){
-      this.Reseller = ""
-      this.Seller = ""
-      this.Admin=""
-    }
-    else if (type=='admin'){
-      this.Reseller = ""
-      this.Seller = ""
-      this.client = ""
-    }
+    // if(type=='reseller')
+    // {
+    //   this.Admin=""
+    //   this.Seller = ""
+    //   this.client = ""
+    // }
+    // else if(type=='seller'){
+    //   this.Reseller = ""
+    //   this.client = ""
+    //   this.Admin=""
+    // }
+    // else if (type=='client'){
+    //   this.Reseller = ""
+    //   this.Seller = ""
+    //   this.Admin=""
+    // }
+    // else if (type=='admin'){
+    //   this.Reseller = ""
+    //   this.Seller = ""
+    //   this.client = ""
+    // }
     const username = {
       userName: Value
     }
@@ -475,4 +475,18 @@ const formattedPriority =
       this.updateForm.get('themeColor')?.setValue(value);
     }
   }
+
+
+  handleSelection(event: any): void {
+  console.log('User selection:', event);
+  this.client=event.client
+  this.Reseller=event.reseller
+  this.Seller=event.seller
+  this.Admin=event.admin
+  console.log('Selected Client:', this.selectedClient);
+  console.log('Selected Reseller:', this.selectedReseller); 
+  const value= this.client|| this.Reseller|| this.Seller || this.Admin
+  this.getUserData(value)
+}
+
 }

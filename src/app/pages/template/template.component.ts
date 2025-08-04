@@ -399,7 +399,9 @@ applyFilteractive(): void {
     this.templateService.templateDetail(data).subscribe({
       next:(res)=>{
         if(res.customParams!=null)
-        this.customParams = res.customParams;
+        this.customParams = res.customParams?.filter(
+         (param : any) => param !== "conversation_id" && param !== "message_id" && param !=="PhoneNo"
+         ); 
         this.createForm();
         this.custom=true
       }
