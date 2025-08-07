@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { formatDate } from '@angular/common';
+import { AccountManagerService } from 'src/app/service/account-manager.service';
+
 
 @Component({
   selector: 'app-add-user',
@@ -28,6 +30,7 @@ export class AddUserComponent {
   MobileNumberMasking="";
   DLRRetry="";
   usertype="";
+  reportList : any;
   selectedFile: File | null = null;
   previewImage: string | ArrayBuffer | null = null;
   userNameExists=false;
@@ -47,7 +50,9 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   selectedColor: string = '#ffcc29';
   // useraccounttype="";
   userObj:any
-  userType:string |null
+  userType:string | null
+  accountManagerName: string = '';
+
   billingType: string | null
   fileList: NzUploadFile[] = [];
   
@@ -80,7 +85,8 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   constructor(private fb: FormBuilder,
     private ngxLoader: NgxUiLoaderService,
     private userCreation: UserCreationService,
-    private toastService:ToastService
+    private toastService:ToastService,
+    private accountService : AccountManagerService
   ){
     this.billingType = (sessionStorage.getItem('billingType'));
     console.log("billing type here is "+this.billingType)
@@ -121,6 +127,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
     retryCount: [""],
     Permission: [this.Permission],
     CreditHistory: [this.CreditHistory],
+    accountManagerName : [this.accountManagerName],
     MobileNumberMasking: [this.MobileNumberMasking],
     MaskingCount: [""],
     creditRefund:[false],
@@ -158,6 +165,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   }
   
   ngOnInit(){
+    this.viewAccount();
     this.addUserForm.get('dlrRequestBodyType')?.valueChanges.subscribe((value: string) => {
       if (value === "Default") {
         this.addUserForm.get('dlrRequestBody')?.setValue(this.dlrDefaltBody);
@@ -299,6 +307,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
       userName: this.addUserForm.value.UserName,
       userPassword: this.addUserForm.value.Password,
       email: this.addUserForm.value.email,
+      accountManagerName : this.addUserForm.value.accountManagerName,
       isAddOperatorViewAllowed: this.addUserForm.value.isAddOperatorViewAllowed,
       mobile: this.addUserForm.value.mobile,
       status: this.addUserForm.value.Status,
@@ -372,5 +381,20 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
       this.userObj.walletBillingMethod = "";  
     }
   }
+
+
+    viewAccount(){
+      let dt  = {
+      loggedInUserName : sessionStorage.getItem('USER_NAME'),
+      }
+
+      this.accountService.viewAccont(dt).subscribe((res)=>{
+
+        this.reportList  = res.dataList; 
+
+
+
+      })
+    };
   
 }

@@ -15,7 +15,7 @@
               </nz-form-control>
               </nz-form-item>
               </div>
-              <nz-col [nzSpan]="role==='admin'?15: role==='reseller'?10:5" *ngIf="role!=='client'">
+              <nz-col [nzSpan]="role==='admin' || role==='accountManager'?15: role==='reseller'?10:5" *ngIf="role!=='client'">
                 <app-filter-dropdown [role]="role" [span]="8" (selectionChange)="handleSelection($event)" [requierd]="false"></app-filter-dropdown>
               </nz-col>
               <div nz-col [nzSpan]="5" class="filter-item">

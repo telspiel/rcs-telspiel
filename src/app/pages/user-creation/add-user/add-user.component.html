@@ -62,6 +62,40 @@
         </nz-form-item>
       </div>
 
+       
+          <div class="" nz-col [nzSpan]="12" *ngIf="role==='admin'">
+        <nz-form-item>
+          <nz-form-label
+            nz-col
+            [nzSpan]="6"
+            nzLabelAlign="left"
+            for="account manager"
+          >
+            Account Manager<span style="color: red">*</span></nz-form-label
+          >
+          <nz-form-control
+            nz-col
+            nzSpan="16"
+            nzErrorTip="Select user type"
+            [nzValidateStatus]="getStatus('usertype')!"
+          >
+          <nz-select 
+           id="Reseller" 
+            nzPlaceHolder="Select Account Manager" 
+            formControlName="accountManagerName"
+           >
+          <nz-option 
+           *ngFor="let account of reportList" 
+           [nzLabel]="account.userName" 
+           [nzValue]="account.userName"
+           ></nz-option>
+       </nz-select>
+
+        
+          </nz-form-control>
+        </nz-form-item>
+      </div>  
+
       <div class="" nz-col [nzSpan]="12">
         <nz-form-item>
           <nz-form-label for="UserName" nz-col [nzSpan]="6" nzLabelAlign="left"
@@ -235,7 +269,8 @@
         [nzSpan]="12"
         *ngIf="addUserForm.get('billingMethod')?.value == false"
       >
-        <nz-form-item>
+        <nz-form-item
+        *ngIf="!(role === 'superadmin' && addUserForm.get('usertype')?.value === 'admin')">
           <nz-form-label [nzSpan]="6" nzLabelAlign="left" for="Billing-Type"
             >Billing Type<span style="color: red">*</span></nz-form-label
           >
@@ -251,6 +286,7 @@
           </nz-form-control>
         </nz-form-item>
       </div>
+      
       <div nz-col [nzSpan]="12">
         <nz-form-item>
           <nz-form-label [nzSpan]="6" nzLabelAlign="left" for="Billing-Cycle"
@@ -328,7 +364,7 @@
   </div>
 
 
-  <h5 style="margin-top: 2rem; font-weight: 900"></h5>
+  <h5 style="margin-top: 2rem; font-weight: 900">Configuration</h5>
   <div
     nz-row
     nzAlign="middle"
@@ -429,19 +465,7 @@
         </nz-form-item>
       </div>
 
-       <div nz-col [nzSpan]="24">
-        <nz-form-item>
-          <nz-form-label [nzSpan]="4" nzLabelAlign="left" for="dlrHandover"
-            >Number Blacklist Allowed<span style="color: red">*</span></nz-form-label
-          >
-          <nz-form-control [nzSpan]="15" nzErrorTip="Select credit Refund">
-            <nz-radio-group id="dlrHandover" formControlName="isBlackListAllowed">
-              <label nz-radio nzValue="No">No</label>
-              <label nz-radio nzValue="Yes">Yes</label>
-            </nz-radio-group>
-          </nz-form-control>
-        </nz-form-item>
-      </div>
+       
 
       <div
         nz-col
@@ -490,6 +514,21 @@
                 placeholder="Dlr Callback Url"
               />
             </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+
+      <div nz-col [nzSpan]="24">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="4" nzLabelAlign="left" for="dlrHandover"
+            >Number Blacklist Allowed<span style="color: red">*</span></nz-form-label
+          >
+          <nz-form-control [nzSpan]="15" nzErrorTip="Select credit Refund">
+            <nz-radio-group id="dlrHandover" formControlName="isBlackListAllowed">
+              <label nz-radio nzValue="No">No</label>
+              <label nz-radio nzValue="Yes">Yes</label>
+            </nz-radio-group>
           </nz-form-control>
         </nz-form-item>
       </div>

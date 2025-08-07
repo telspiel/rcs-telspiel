@@ -20,7 +20,7 @@
   </div>
 
   <!-- Reseller -->
-  <div *ngIf="['admin','superadmin'].includes(role)" [ngClass]="getRoleClass(role)">
+  <div *ngIf="['admin','superadmin','accountManager'].includes(role)" [ngClass]="getRoleClass(role)">
     <nz-form-item>
       <nz-form-label nzFor="reseller" [nzRequired]="requierd">Select Reseller</nz-form-label>
       <nz-form-control nzSpan="24">
@@ -40,7 +40,7 @@
   </div>
 
   <!-- Seller -->
-  <div *ngIf="['reseller', 'admin','superadmin'].includes(role)" [ngClass]="getRoleClass(role)">
+  <div *ngIf="['reseller', 'admin','superadmin','accountManager'].includes(role)" [ngClass]="getRoleClass(role)">
     <nz-form-item>
       <nz-form-label nzFor="seller" [nzRequired]="requierd">Select Seller</nz-form-label>
       <nz-form-control nzSpan="24">
@@ -60,7 +60,7 @@
   </div>
 
   <!-- Client -->
-  <div *ngIf="['superadmin','seller', 'reseller', 'admin'].includes(role)" [ngClass]="getRoleClass(role)">
+  <div *ngIf="['superadmin','seller', 'reseller', 'admin','accountManager'].includes(role)" [ngClass]="getRoleClass(role)">
     <nz-form-item>
       <nz-form-label nzFor="client" [nzRequired]="requierd">Select Client</nz-form-label>
       <nz-form-control nzSpan="24">

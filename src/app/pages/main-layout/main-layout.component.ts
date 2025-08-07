@@ -45,7 +45,7 @@ userAvailableBalance: number = 0;
       label: "Dashboard",
       icon: "appstore",
       link: "/dashboard",
-      roles: ["admin", "seller", "reseller", "client", "superadmin"],
+      roles: ["admin", "seller", "reseller", "client", "superadmin","accountManager"],
       group: "dashboard",
     },
 
@@ -101,7 +101,7 @@ userAvailableBalance: number = 0;
       label: "Report",
       icon: "pie-chart",
       link: "/detailed-report",
-      roles: ["admin", "seller", "reseller", "client"],
+      roles: ["admin", "seller", "reseller", "client" ,"accountManager"],
       exact:false,
       group:'detailed-report'
     },
@@ -119,7 +119,7 @@ userAvailableBalance: number = 0;
     label: "Campaign Report",
     icon: "notification",
     link: "/quick-campaign",
-    roles: [ "admin", "seller", "reseller", "superadmin"],
+    roles: [ "admin", "seller", "reseller", "superadmin" ,"accountManager"],
     exact: false,
     group: 'campaign'
   },
@@ -168,6 +168,16 @@ userAvailableBalance: number = 0;
       group:'black'
 
     },
+     {
+      label: "Account Manager",
+      icon: "mac-command",
+      link: "/account-manager",
+      roles: ["admin"],
+      exact:false,
+      group:'black'
+
+    },
+
 
     {
       label: "Billing Plan",

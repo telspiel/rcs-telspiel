@@ -75,28 +75,38 @@ import { ViewphonebookComponent } from "./pages/phonebook/viewphonebook/viewphon
 
 import { BlackListComponent } from "./pages/black-list/black-list.component";
 
-import { AddBlackListComponent } from "./pages/black-list/add-black-list/add-black-list.component";
+import{AddBlackListComponent} from "./pages/black-list/add-black-list/add-black-list.component";
 // import { SegmentsComponent } from './pages/segments/segments.component';
 // import { AddSegmentComponent } from './pages/segments/add-segment/add-segment.component';
 //import { LaunchBotComponent } from './pages/launch-bot/launch-bot.component';
 // import { AddTemplateComponent } from './pages/template/add-template/add-template.component';
 // import { ViewTemplateComponent } from './pages/template/view-template/view-template.component';
 
+import { AccountManagerComponent } from "./pages/account-manager/account-manager.component";
+
+import { AddAccountComponent } from "./pages/account-manager/add-account/add-account.component";
+
+
+import { EditAccountComponent } from "./pages/account-manager/edit-account/edit-account.component";
+
+import { ViewAccountComponent } from "./pages/account-manager/view-account/view-account.component";
+
 const routes: Routes = [
   {
     path: "",
     component: MainLayoutComponent,
     children: [
-      { path: "profile", component: ProfileComponent },
-      {
-        path: "phonebook",
-        component: PhonebookComponent,
-        children: [],
-      },
-      { path: "addphonebook", component: AddPhonebookComponent },
-      { path: "viewphonebook", component: ViewphonebookComponent },
-
-      { path: "", redirectTo: "dashboard", pathMatch: "full" },
+      {path:"", redirectTo: "dashboard", pathMatch: "full"},
+      {path: "profile", component: ProfileComponent},
+      { 
+  path: "phonebook", 
+  component: PhonebookComponent,
+  children: [
+    
+  ]
+},
+       { path: "addphonebook", component: AddPhonebookComponent},
+       { path: "viewphonebook", component: ViewphonebookComponent },
       {
         path: "dashboard",
         component: DashboardComponent,
@@ -408,6 +418,32 @@ const routes: Routes = [
       },
       { path: "addlink", component: AddLinksComponent },
 
+      {path:"account-manager", 
+      component: AccountManagerComponent, 
+      children:[
+        {path:'', redirectTo: "addAccount", pathMatch:"full"},
+      {path:"addAccount", component:AddAccountComponent, 
+        data:{link:"account-manager"} },
+      {path:"edit-account", component:EditAccountComponent, 
+      data:{link:"account-manager"} },
+      {path:"view-account",component:ViewAccountComponent ,    data:{link:"account-manager"} }
+
+
+        ]
+      },
+
+      
+
+      // {
+      //   path: 'drawflow',
+      //   component: DrawflowComponent,
+      //   children: [
+      //     { path: '', redirectTo: 'drawflowadd', pathMatch: 'full' },
+      //     { path: 'drawflowadd', component: DrawflowaddComponent, data: { breadcrumb: 'add' } },
+      //     { path: 'drawflowview', component: DrawflowviewComponent, data: { breadcrumb: 'view' } },
+      //     { path: 'drawflowupdate', component: DrawflowupdateComponent, data: { breadcrumb: 'update' } },
+      //   ]
+      // },
       { path: "upload", component: UploadModalComponent },
       { path: "tps", component: TpsManagerComponent },
       //{path:'launch-bot', component: LaunchBotComponent},

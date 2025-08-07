@@ -5,6 +5,9 @@ import { ToastService } from 'src/app/shared/toast-service.service';
 import { differenceInCalendarDays } from 'date-fns';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { formatDate } from '@angular/common';
+import { BrandService } from 'src/app/service/brand.service';
+
+
 
 @Component({
   selector: 'app-edit',

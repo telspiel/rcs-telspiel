@@ -24,7 +24,7 @@ import { UserCreationService } from 'src/app/service/user-creation.service';
 export class QuickComponent {
 dateRange: string[] = [this.formatDate(new Date()), this.formatDate(new Date())];
 
-role: string = (sessionStorage.getItem('ROLE') || '').toLowerCase();
+role: string = (sessionStorage.getItem('ROLE') || '');
 pageTitle: string = '';
 campaignRunningStatus: string = 'COMPLETE';
 today = new Date();

@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HTTP_Response } from 'src/app/models/responseModel';
 import { UserCreationService } from 'src/app/service/user-creation.service';
 import { ToastService } from 'src/app/shared/toast-service.service';
+import { BrandService } from 'src/app/service/brand.service';
+
 
 @Component({
   selector: 'app-view',
@@ -40,6 +42,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   client = "";
   UserName = "";
   email = "";
+  accountManager = "";
   Password = "";
   themeColor = "";
   // useraccounttype = "";
@@ -88,7 +91,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
    isAddOperatorViewAllowed= ""
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private brandService: BrandService,) {
 
     // const username = {
     //   userName: "superadmin"
@@ -121,6 +124,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
     this.viewForm = this.fb.group({
       usertype: [null],
       UserName: [{value:'', disabled: true}],
+      accountManager:[{value:'', disabled: true}],
       email: [{value:'', disabled: true }],
       Password: [{value:'', disabled: true }],
       themeColor: [{value:'', disabled: true}],
@@ -250,6 +254,7 @@ if (user) {
                usertype: res.data.user.customerType,
               UserName: res.data.user.userName,
               email:res.data.user.email ,
+              accountManager : res.data.user.accountManagerName,
               Password: res.data.user.userPassword,
               themeColor: res.data.user.themeColor,
               billingMethod: billingMethodValue,

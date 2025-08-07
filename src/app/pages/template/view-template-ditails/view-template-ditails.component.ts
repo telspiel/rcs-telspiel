@@ -228,12 +228,16 @@ loadImageFailed() {
   }
   selectCard(index: number) {
     this.selectedCardIndex = index 
-    this.carousel.goTo(index)
     console.log(this.carouselList[index])
+    this.templateForm.patchValue({
+      cardTitle: this.carouselList[index].cardTitle,
+      cardDescription :this.carouselList[index].cardDescription,
+
+    })
     this.updateValue(index)
   }
   updateValue(i: number) {
-    const selectedCard = this.carouselList[i];
+    const selectedCard = i<=0 ?this.carouselList[i] : this.carouselList[this.selectedCardIndex];
   
     // Update the selected card index
     this.selectedCardIndex = i;
@@ -536,7 +540,7 @@ loadImageFailed() {
                   
                   
                 });
-
+                this.selectedCardIndex=0
                 
                 this.suggestionsFormArray.clear();
                 this.carouselList = res.carouselList.map((item: any) => ({
@@ -559,7 +563,7 @@ loadImageFailed() {
                     date: suggestion.date || "",
                   })) || [],
               }));
-
+              this.updateValue(this.selectedCardIndex)
               }
             if(type === 'text_message'){
               this.templateForm.patchValue({

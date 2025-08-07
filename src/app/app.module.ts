@@ -176,6 +176,15 @@ import { ViewphonebookComponent } from './pages/phonebook/viewphonebook/viewphon
 import { FilterDropdownComponent } from './component/filter-dropdown/filter-dropdown.component';
 import { BlackListComponent } from './pages/black-list/black-list.component';
 import { AddBlackListComponent } from './pages/black-list/add-black-list/add-black-list.component';
+import { AccountManagerComponent } from './pages/account-manager/account-manager.component';
+import { AddAccountComponent } from './pages/account-manager/add-account/add-account.component';
+import { EditAccountComponent } from './pages/account-manager/edit-account/edit-account.component';
+import { ViewAccountComponent } from './pages/account-manager/view-account/view-account.component';
+
+// import { ApptpsComponent } from './pages/tps-manager/apptps/apptps.component';
+// import { UpdatetpsComponent } from './pages/tps-manager/updatetps/updatetps.component';
+// import { SegmentsComponent } from './pages/segments/segments.component';
+// import { AddSegmentComponent } from './pages/segments/add-segment/add-segment.component';
 
 
 registerLocaleData(en);
@@ -296,6 +305,16 @@ registerLocaleData(en);
     FilterDropdownComponent,
     BlackListComponent,
     AddBlackListComponent,
+    AccountManagerComponent,
+    AddAccountComponent,
+    EditAccountComponent,
+    ViewAccountComponent,
+
+    // ApptpsComponent,
+    // UpdatetpsComponent,
+    // SegmentsComponent,
+    // AddSegmentComponent,
+    
 
   ],
   imports: [

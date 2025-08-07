@@ -96,6 +96,16 @@
                 </nz-form-control>
                 </nz-form-item>
             </div>
+
+
+             <div class="" nz-col [nzSpan]="12">
+                <nz-form-item>
+                <nz-form-label  for="UserName" nz-col [nzSpan]="6" nzLabelAlign="left">Account Manager<span style="color: red;">*</span></nz-form-label>
+                <nz-form-control nz-col nzSpan="16" [nzErrorTip]="'accountManager Required'"   >
+                    <input id="accountManager" nz-input formControlName="accountManager" placeholder="Account Manager" autocomplete="off" [disabled]="true"/>
+                </nz-form-control>
+                </nz-form-item>
+            </div>
             
         
             <div nz-col [nzSpan]="12">

@@ -59,8 +59,8 @@ export class DynamicComponent implements OnInit {
   year = this.today.getFullYear();
   botss: any;
   selectedBot: any = null;
-   isModalVisible = false;
-
+  isModalVisible = false;
+mobileNumArray:any
 phoneList: string[] = [
   '9175X0X0X089',
   '9188X0X0X078',
@@ -1853,7 +1853,8 @@ open(): void {
   }
 
   onSubmit() {
-  
+   
+
 
     if (this.quickCampaign.invalid) {
       this.quickCampaign.markAllAsTouched();
@@ -1867,7 +1868,6 @@ open(): void {
 
 
 
-      this.isSubmitting = true;
        this.isDisabled = true;
 
     const formValues = this.quickCampaign.value;
@@ -1900,9 +1900,9 @@ mobileNumbers: formValues.mobileNumbers
           .replace(/^\+/, '')    // remove any other +
       )
       .filter((num: string) => num !== '' && /^\d+$/.test(num))
-  : [],
+  : this.mobileNumArray?this.mobileNumArray: [],
 
-        isSmsFallback: formValues.fallback, 
+        isSmsFallback: formValues.fallback,
         isWhatsappFallback: formValues.whatsapp,
         fallbackSms: formValues.fallbackText,
         fallbackWhatsapp: formValues.fallbackTextwhatsapp,
@@ -1939,6 +1939,7 @@ if (formValues.selectvariablecolumn === 'Y') {
         this.capmser.getCampaign(payload).subscribe({
         next: (res) => {
           this.ngxLoader.stop(); 
+          
           this.toastService.publishNotification(
             "success",
             res.message,
@@ -2099,6 +2100,7 @@ fetchNumbersInGroup(groupId: string, callback?: () => void) {
       (response) => {
         console.log('Numbers in group:', response);
         this.groupNumbers = response.data.phonebookList;
+        this.mobileNumArray=response.data.phonebookList.map((item: any) => item.contactNumber);
         if (callback) {
           callback();
         }
