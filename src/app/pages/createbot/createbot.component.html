@@ -1,6 +1,7 @@
 <div class="rcs-page-container" style="padding: 20px; margin-top: 20px;">
 
   <!-- Page Header -->
+  <div *ngIf="role==='admin'">
   <div class="header-section" >
     <h2>Hey,</h2>
     <p>
@@ -9,8 +10,9 @@
       <span>Get started today and experience the future of messaging! ✨"</span>
     
     </p>
-    <button *ngIf="role==='admin'" nz-button nzType="primary" (click)="clearBotAndNavigate()" nzShape="round">Create New RCS Bot</button>
+    <button  nz-button nzType="primary" (click)="clearBotAndNavigate()" nzShape="round">Create New RCS Bot</button>
   </div>
+</div>
 
   <!-- Search Bots -->
   <div class="search-section" style="margin: 20px 0;">
@@ -53,7 +55,7 @@
               {{ status }}
             </nz-tag>
           </td>
-          <td *ngIf="role !== 'client'">{{ bot.operatorNames }}</td>
+          <td *ngIf="role !== 'client' && role !== 'seller' && role !== 'reseller'">{{ bot.operatorNames }}</td>
             <td *ngIf="role==='admin' || role==='seller' || role ==='reseller' || role ==='client' " >
               <a [routerLink]="'/viewbot'" (click)="editBot(bot)">
                 <button nz-button nzType="link" nzShape="circle" nzTooltipTitle="View">

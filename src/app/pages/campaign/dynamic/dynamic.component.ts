@@ -1902,7 +1902,7 @@ mobileNumbers: formValues.mobileNumbers
       .filter((num: string) => num !== '' && /^\d+$/.test(num))
   : [],
 
-        isSmsFallback: formValues.fallback,
+        isSmsFallback: formValues.fallback, 
         isWhatsappFallback: formValues.whatsapp,
         fallbackSms: formValues.fallbackText,
         fallbackWhatsapp: formValues.fallbackTextwhatsapp,

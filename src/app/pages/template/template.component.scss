@@ -298,4 +298,15 @@
     justify-content: center;
   }
   
+  // ===========================================================
   
+  .new-modal-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .modal-content-label {
+    padding: 0;
+  }

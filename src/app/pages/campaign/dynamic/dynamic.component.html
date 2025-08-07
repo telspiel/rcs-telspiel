@@ -1309,7 +1309,7 @@
 
  -->
 
-        <nz-form-item>
+        <!-- <nz-form-item>
           <nz-form-label [nzRequired]="true" nzFor="fallbackSms">
             Do you want automatic fallback to SMS?
           </nz-form-label>
@@ -1319,7 +1319,7 @@
               <label nz-radio [nzValue]="'N'">No</label>
             </nz-radio-group>
           </nz-form-control>
-        </nz-form-item>
+        </nz-form-item> -->
 
         <nz-form-item nz-col [nzSpan]="24" *ngIf="isFallbackEnabled">
           <nz-form-label nzFor="smsContent"><span style="color: red"> * </span>Fallback SMS </nz-form-label>
@@ -1331,10 +1331,6 @@
               formControlName="fallbackText"
               placeholder="Enter fallback SMS content"
             ></textarea>
-            <!-- <small
-              >{{ quickCampaign.get("fallbackText")?.value?.length || 0 }}/160
-              characters used</small
-            > -->
           </nz-form-control>
         </nz-form-item>
 
@@ -1367,7 +1363,7 @@
         </nz-form-item>
 
 
-                 <nz-form-item>
+                 <!-- <nz-form-item>
                     <nz-form-label [nzRequired]="true" nzFor="whatsapp">
                         Do you want automatic fallback to Whatsapp?
                     </nz-form-label>
@@ -1377,7 +1373,8 @@
                             <label nz-radio [nzValue]="'N'">No</label>
                         </nz-radio-group>
                     </nz-form-control>
-                </nz-form-item>
+                </nz-form-item> -->
+                
                 <nz-form-item nz-col [nzSpan]="24" *ngIf="isFallbackEnabledwhatsapp">
                     <nz-form-label nzFor="whatsapp"><span style="color: red"> * </span>Fallback Whatsapp </nz-form-label>
                     <nz-form-control>

@@ -170,6 +170,107 @@
                 >
                   <i style="margin-left: 4%; margin-top: 8px;" nz-icon nzType="edit" nzTheme="outline"></i>
                 </a>
+              
+              <a>
+                <button
+                  nz-button
+                  nzType="link"
+                  nzShape="circle"
+                  nz-tooltip
+                  nzTooltipTitle="Fallback"
+                  (click)="configureTemplate(template.templateId); $event.preventDefault()"
+                >
+                  <i nz-icon nzType="setting" nzTheme="outline"></i>
+                </button>
+              </a>
+              <nz-modal
+                [(nzVisible)]="isConfigModalVisible"
+                [nzWidth]="'1000px'"
+                [nzTitle]="'Fallback - '"
+                (nzOnCancel)="handleConfigCancel()"
+                (nzOnOk)="handleConfigOk()"
+              >
+              <ng-container *nzModalContent>
+                <form [formGroup]="configForm" nz-form [nzLayout]="'vertical'">
+
+                  <nz-form-item class="new-modal-content">
+                    <nz-form-label [nzRequired]="true" nzFor="fallbackSms" class="modal-content-label">
+                      Do you want automatic fallback to SMS?
+                    </nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group formControlName="fallback">
+                        <label nz-radio [nzValue]="'Y'">Yes</label>
+                        <label nz-radio [nzValue]="'N'">No</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+                  
+                  <nz-form-item *ngIf="isFallbackEnabledSms">
+                    <nz-form-label><span style="color: red">*</span> Fallback SMS</nz-form-label>
+                    <nz-form-control>
+                      <textarea nz-input formControlName="fallbackText" placeholder="Enter fallback SMS content"></textarea>
+                    </nz-form-control>
+                  </nz-form-item>
+                  
+                  <nz-form-item *ngIf="isFallbackEnabledSms">
+                    <nz-form-label><span style="color: red">*</span> SMS API Endpoint</nz-form-label>
+                    <nz-form-control>
+                      <input nz-input formControlName="smsApiEndpoint" placeholder="Enter SMS API Endpoint" />
+                    </nz-form-control>
+                    <p style="font-size: 0.7rem; color: #adadad;">
+                      Use %PHONENO% for the recipient's phone number and %MESSAGETEXT% for
+            your message in the API. Refer to the example URL below: <br />
+
+            https://sms.gmstool.com/pushapi/sendbulkmsg?username=testapi21&dest=%PHONENO%&apikey=a1b2c3d4e5f6g7h8i9j0&signature=POIUYT&msgtype=PM&msgtxt=%MESSAGETEXT%&entityid=1234567&templateid=12345678
+                    </p>
+                  </nz-form-item>
+
+                  <!-- WhatsApp Fallback Toggle -->
+                  <nz-form-item class="new-modal-content">
+                    <nz-form-label [nzRequired]="true" nzFor="whatsapp" class="modal-content-label">
+                      Do you want automatic fallback to WhatsApp?
+                    </nz-form-label>
+                    <nz-form-control>
+                      <nz-radio-group formControlName="whatsapp">
+                        <label nz-radio [nzValue]="'Y'">Yes</label>
+                        <label nz-radio [nzValue]="'N'">No</label>
+                      </nz-radio-group>
+                    </nz-form-control>
+                  </nz-form-item>
+
+                  <nz-form-item *ngIf="isFallbackEnabledWhatsapp">
+                    <nz-form-label><span style="color: red">*</span> Fallback WhatsApp</nz-form-label>
+                    <nz-form-control>
+                      <textarea
+                        nz-input
+                        rows="4"
+                        formControlName="fallbackTextwhatsapp"
+                        placeholder="Enter fallback WhatsApp content"
+                      ></textarea>
+                    </nz-form-control>
+                  </nz-form-item>
+                  
+                  <nz-form-item *ngIf="isFallbackEnabledWhatsapp">
+                    <nz-form-label><span style="color: red">*</span> WhatsApp API Endpoint</nz-form-label>
+                    <nz-form-control>
+                      <input
+                        nz-input
+                        formControlName="whatsappApiEndpoint"
+                        placeholder="Enter WhatsApp API Endpoint"
+                      />
+                    </nz-form-control>
+                    <p style="font-size: 0.7rem; color: #adadad; text-align: justify; padding-right: 10px; word-wrap: break-word;">
+                      Use %PHONENO% for the recipient's phone number and %MESSAGETEXT% for your message in the API. Refer to the example URL below: <br>
+
+                        https://sms.gmstool.com/pushapi/sendbulkmsg?username=testapi21&dest=%PHONENO%&apikey=a1b2c3d4e5f6g7h8i9j0&signature=POIUYT&msgtype=PM&msgtxt=%MESSAGETEXT%&entityid=1234567&templateid=12345678
+                    </p>
+                  </nz-form-item>
+                  
+
+                </form>
+              </ng-container>
+            </nz-modal>
+                
             </td>
           </tr>
         </tbody>

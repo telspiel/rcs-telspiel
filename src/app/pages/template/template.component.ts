@@ -412,11 +412,61 @@ applyFilteractive(): void {
       }
     })
     this.getBotDetails()
-    
-
    
-    
   }
+
+  // ======================================================
+
+  configureTemplate(templateId: string): void {
+    console.log("Configuring template ID");
+  
+    // Reset form with default values
+    this.configForm.reset({
+      fallback: 'N', // SMS fallback = No by default
+      fallbackText: '',
+      smsApiEndpoint: '',
+      whatsapp: 'N', // WhatsApp fallback = No by default
+      fallbackTextwhatsapp: '',
+      whatsappApiEndpoint: ''
+    });
+  
+    // Open the modal
+    this.isConfigModalVisible = true;
+  }
+  
+
+isConfigModalVisible = false;
+selectedTemplate: any = null;
+
+
+configForm: FormGroup = this.fb.group({
+  fallback: ['N'],
+  fallbackText: [''],
+  smsApiEndpoint: [''],
+  whatsapp: ['N'],
+  fallbackTextwhatsapp: [''],
+  whatsappApiEndpoint: ['']
+});
+
+get isFallbackEnabledSms(): boolean {
+  return this.configForm.get('fallback')?.value === 'Y';
+}
+
+get isFallbackEnabledWhatsapp(): boolean {
+  return this.configForm.get('whatsapp')?.value === 'Y';
+}
+
+
+  handleConfigOk(){
+    this.isConfigModalVisible=false
+  }
+  
+  handleConfigCancel(){
+    this.isConfigModalVisible=false
+  }
+
+// ======================================================
+
   createForm() {
     const formControls: any = {};
     
@@ -465,6 +515,14 @@ applyFilteractive(): void {
   handleClose(){
     this.isTestTemplate=false
   }
+
+  // handleConfigOk(){
+  //   this.isConfigModalVisible=false
+  // }
+
+  // handleConfigCancel(){
+  //   this.isConfigModalVisible=false
+  // }
 
 
   showModal(): void {
