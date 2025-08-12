@@ -486,7 +486,7 @@ loadImageFailed() {
       // Find operator data from API response
       let operatorTemplateSecret: string | null = null;
       let operatorTemplateClientId: string | null = null;
-      let tps: number = 1;
+      // let tps: number = 1;
 
       // Search API data for matching operator
       const operatorDataFromApi = this.apiData
@@ -496,13 +496,13 @@ loadImageFailed() {
       if (operatorDataFromApi) {
         operatorTemplateSecret = operatorDataFromApi.operatorTemplateSecret || null;
         operatorTemplateClientId = operatorDataFromApi.operatorTemplateClientId || null;
-        tps = operatorDataFromApi.tps || 1;
+        // tps = operatorDataFromApi.tps || 1;
       }
 
       const isVodafone = operatorName === 'VODAFONE' || operatorName === 'Vi';
       const formGroup = this.fb.group({
         operatorName: [operatorName],
-        tps: [tps],
+        // tps: [tps],
         isNewBot: [!isVodafone || (!operatorTemplateSecret && !operatorTemplateClientId)], // Set isNewBot to false for Vodafone with API data
         trafficVolume: [100],
         operatorBotId: [null],
@@ -673,6 +673,7 @@ loadImageFailed() {
     );
   }
   
+
   
 
 
@@ -1099,6 +1100,10 @@ loadImageFailed() {
     });
   }
   
+
+
+  
+
 
   // updateColorCode(event: Event): void {
   //   const inputElement = event.target as HTMLInputElement;
