@@ -59,10 +59,43 @@
         "
       >
         <!-- Credits and Last Login Info -->
-        <div
+         <div
           *ngIf="role !== 'agent'"
-          style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center"
+          style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center"
         >
+
+          <span >
+            Block Rich Credit:
+            <span >{{ availableRichBlockCredit }}</span>
+            <button
+              nz-button
+              nzType="link"
+              nzShape="circle"
+              nz-tooltip
+              nzTooltipTitle="Refresh"
+              (click)="blockRichcredit()"
+            >
+              <i nz-icon nzType="redo" nzTheme="outline"></i>
+            </button>
+          </span>
+
+
+            <span>
+            Block Text Credit:
+            <span>{{ availableTextBlockCredit }}</span>
+            <button
+              nz-button
+              nzType="link"
+              nzShape="circle"
+              nz-tooltip
+              nzTooltipTitle="Refresh"
+              (click)="blockTextcredit()"
+            >
+              <i nz-icon nzType="redo" nzTheme="outline"></i>
+            </button>
+          </span> 
+
+          
           <span>
             Available Rich Credit:
             <span style="margin-left: 4px">{{ availableRichCredit }}</span>

@@ -118,6 +118,7 @@ export class TemplateMsgComponent implements OnInit {
   botCondition='new'
   selectedColor: string = '#000000';
   Seller="";
+  apiData: any[] = [];
   client="";
   Admin: any;
   botType='new';
@@ -472,57 +473,76 @@ loadImageFailed() {
   }
   
 
-  onOperatorChange(selected: string[]) {
-    this.operatorData.clear(); 
+ onOperatorChange(selectedOperators: string[]): void {
+    const operatorDataArray = this.operatorForm.get('operatorData') as FormArray;
 
-    selected.forEach(op => {
-     
-     this.operatorData.push(
-        this.fb.group({
-          operatorName: [op, Validators.required],
-          isNewBot: [true, Validators.required], 
-          trafficVolume: [100, Validators.required],
-          operatorBotId: ['', [noSpaceRegexValidator]],
-          operatorBotSecret: ['', [noSpaceRegexValidator]],
-          operatorBotStatus: ['LAUNCHED']
-        })
-      )
+    // Clear existing operatorData form array
+    while (operatorDataArray.length) {
+      operatorDataArray.removeAt(0);
+    }
+
+    // Add form groups for each selected operator
+    selectedOperators.forEach(operatorName => {
+      // Find operator data from API response
+      let operatorTemplateSecret: string | null = null;
+      let operatorTemplateClientId: string | null = null;
+      let tps: number = 1;
+
+      // Search API data for matching operator
+      const operatorDataFromApi = this.apiData
+        .flatMap(item => item.operatorData)
+        .find(op => op.operatorName === operatorName);
+
+      if (operatorDataFromApi) {
+        operatorTemplateSecret = operatorDataFromApi.operatorTemplateSecret || null;
+        operatorTemplateClientId = operatorDataFromApi.operatorTemplateClientId || null;
+        tps = operatorDataFromApi.tps || 1;
+      }
+
+      const isVodafone = operatorName === 'VODAFONE' || operatorName === 'Vi';
+      const formGroup = this.fb.group({
+        operatorName: [operatorName],
+        tps: [tps],
+        isNewBot: [!isVodafone || (!operatorTemplateSecret && !operatorTemplateClientId)], // Set isNewBot to false for Vodafone with API data
+        trafficVolume: [100],
+        operatorBotId: [null],
+        operatorBotSecret: [null],
+        operatorBotStatus: ['PENDING'],
+        operatorTemplateSecret: [operatorTemplateSecret],
+        operatorTemplateClientId: [operatorTemplateClientId]
+      });
+      operatorDataArray.push(formGroup);
     });
   }
-  ngOnInit(): void {
-
-// this.botService.viewtps(this.operator).subscribe(
-//   (res: any) => {
-//     // Convert string array to array of objects with name and label
-//     this.operators = res.data.selectedOperators.map((op: string) => ({
-//       name: op,
-//       label: op
-//     }));
-//     console.log("Operator list:", this.operators);
-//   },
-//   (err) => {
-//     console.error("Error in viewtps:", err);
-//   }
-// );
-
-this.botService.viewtps(this.operator).subscribe(
-  (res: any) => {
-    const selectedOperators = res.data[0]?.selectedOperators || [];
-   const apiOperators = selectedOperators.map((op: string) => ({
-      name: op,
-      label: op
-    }));
 
 
-    console.log("API operator list:", apiOperators);
-    this.operators = [...apiOperators];
+ ngOnInit(): void {
 
-    console.log("Complete operator list:", this.operators);
-  },
-  (err) => {
-    console.error("Error in viewtps:", err);
-  }
-);
+// Initialize form
+    this.operatorForm = this.fb.group({
+      selectedOperators: [[]],
+      operatorData: this.fb.array([])
+    });
+
+    // Fetch and store API data for dropdown and operator details
+    this.botService.viewtps(this.operator).subscribe(
+      (res: any) => {
+        this.apiData = res.data; // Store API response
+        const selectedOperators = res.data[0]?.selectedOperators || [];
+        const apiOperators = selectedOperators.map((op: string) => ({
+          name: op,
+          label: op
+        }));
+
+        console.log("API operator list:", apiOperators);
+        this.operators = [...apiOperators]; // Populate dropdown options
+        console.log("Complete operator list:", this.operators);
+        // Do NOT pre-populate selectedOperators or operatorData
+      },
+      (err) => {
+        console.error("Error in viewtps:", err);
+      }
+    );
 
 
     this.operatorForm = this.fb.group({
@@ -566,6 +586,10 @@ this.botService.viewtps(this.operator).subscribe(
     this.updateIconColors();
   }
 
+  
+  
+
+  
   updateColorCode(event: any): void {
     this.selectedColor = event.target.value;
     this.updateIconColors();

@@ -127,7 +127,7 @@
 
           <!-- Select Media Height -->
           <nz-form-item
-            *ngIf="(templateForm.get('type')?.value !== 'TextMessagewithpdf')&&(templateForm.get('type')?.value !== 'TextMessage') && (templateForm.get('cardOrientation')?.value === 'VERTICAL') || (templateForm.get('type')?.value === 'carousel')" 
+            *ngIf="(templateForm.get('type')?.value !== 'TextMessagewithpdf')&&(templateForm.get('type')?.value !== 'TextMessage') && (templateForm.get('cardOrientation')) || (templateForm.get('type')?.value === 'carousel')" 
             
             >  <nz-form-label nzFor="mediaHeight">Select Media Height <span style="color: red;"> * </span></nz-form-label>
             <nz-form-control>
@@ -308,7 +308,7 @@
                         <span style="color: red;">{{err}}</span>
                       </div>
                     </nz-tab>
-                    <nz-tab nzTitle="Upload vedio">
+                    <nz-tab nzTitle="Upload video">
                       <div class="">
                         
                           <p *ngIf="templateForm.get('type')?.value === 'rich_card'">
@@ -377,7 +377,7 @@
                 </video> 
                 </nz-form-control>
             </nz-form-item>
-          <nz-form-item *ngIf="(templateForm.get('type')?.value === 'carousel' && carouselList[selectedCardIndex]?.mediaUrl) || (templateForm.get('standAloneFileName')?.value && templateForm.get('standAloneFileName')?.value.includes('.mp4'))">
+          <nz-form-item *ngIf="(templateForm.get('type')?.value === 'carousel' && carouselList[selectedCardIndex]?.mediaUrl?.includes('.mp4')) || (templateForm.get('standAloneFileName')?.value && templateForm.get('standAloneFileName')?.value.includes('.mp4'))">
             <nz-form-label nzFor="file">Video Thumbnail</nz-form-label>
             <div class="">
               <button style="width: 150px;" nz-button nzType="primary" (click)="showthum()" [disabled]="(templateForm.get('type')?.value === 'rich_card' && templateForm.get('cardOrientation')?.value === 'HORIZONTAL' || templateForm.get('type')?.value === 'rich_card' && templateForm.get('cardOrientation')?.value === 'VERTICAL' && templateForm.get('height')?.value || (templateForm.get('type')?.value === 'carousel' && templateForm.get('height')?.value && templateForm.get('width')?.value && selectedCardIndex >= 0)) ? false : true">

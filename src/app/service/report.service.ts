@@ -16,6 +16,9 @@ const updateCreditForUser="/rcs-reseller-service/creditService/updateCreditForUs
 const SUMMARYREPORT="/rcs-reseller-service/userSummaryService/userSummaryReport";
 const totalcredit  = "/rcs-reseller-service/creditService/getAvailableCreditForUser"
 
+const blockRichCredit = "/rcs-reseller-service/creditService/getBlockedCredit"
+const blockTextCredit = "/rcs-reseller-service/creditService/getBlockedCredit"
+
 @Injectable({
   providedIn: 'root'
 })
@@ -76,6 +79,24 @@ downloaddetailreport(dt: any): Observable<Blob> {
     const URL =`${BASE_URL}${updateCreditForUser}`
     return this.httpService.post<any>(URL,dt,{headers})
   }
+
+  blockRichCredit(data:any){
+    const headers = new HttpHeaders({
+      "Authorization": `${sessionStorage.getItem('TOKEN')}`,
+    })
+    const URL =`${BASE_URL}${blockRichCredit}`
+    return this.httpService.post<any>(URL,data,{headers})
+  }
+
+  blockTextCredit(data:any){
+     const headers = new HttpHeaders({
+      "Authorization": `${sessionStorage.getItem('TOKEN')}`,
+    })
+    const URL =`${BASE_URL}${blockTextCredit}`
+    return this.httpService.post<any>(URL,data,{headers})
+
+  }
+
 
   totalCredit(dte:any)
   { 

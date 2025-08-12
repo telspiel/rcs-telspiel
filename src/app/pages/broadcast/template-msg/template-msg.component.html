@@ -496,7 +496,7 @@
     <div   >
       <!-- *ngIf="role !== 'client' && role !== 'reseller' && role !== 'seller'" -->
       <nz-card style="margin-top: 20px; margin-bottom: 20px;" nzTitle="Operator & Routing">
-        <form [formGroup]="operatorForm">
+       <form [formGroup]="operatorForm">
 
           <!-- Select Operator -->
           <nz-form-item>
@@ -542,7 +542,7 @@
                     *ngIf="operator.get('isNewBot')?.value === false && ['VODAFONE','Vi'].includes(operator.get('operatorName')?.value)">
                     <nz-form-label nzFor="operatorTemplateSecret">Template Secret</nz-form-label>
                     <nz-form-control [nzErrorTip]="templateIdErrorTpl">
-                      <input nz-input formControlName="operatorTemplateSecret"  placeholder="Enter Template Secret" />
+                      <input nz-input formControlName="operatorTemplateSecret" readonly  placeholder="Enter Template Secret" />
                     </nz-form-control>
                   </nz-form-item>
 
@@ -556,7 +556,7 @@
                     *ngIf="operator.get('isNewBot')?.value === false && ['VODAFONE','Vi'].includes(operator.get('operatorName')?.value)">
                     <nz-form-label nzFor="operatorTemplateClientId">Client Id</nz-form-label>
                     <nz-form-control [nzErrorTip]="templateIdErrorTpl">
-                      <input nz-input formControlName="operatorTemplateClientId"  placeholder="Enter Client Id" />
+                      <input nz-input formControlName="operatorTemplateClientId"  readonly placeholder="Enter Client Id" />
                     </nz-form-control>
                   </nz-form-item>
 

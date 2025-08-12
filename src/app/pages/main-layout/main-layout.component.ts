@@ -24,6 +24,8 @@ interface MenuItem {
 export class MainLayoutComponent implements OnInit {
   availableRichCredit: number = 0; // Variable to store available rich credit
   availableTextCredit: number = 0;
+  availableTextBlockCredit: number = 0;
+  availableRichBlockCredit: number = 0;
 userAvailableBalance: number = 0;
   routeLink: string = "";
   isCollapsed = false;
@@ -161,7 +163,7 @@ userAvailableBalance: number = 0;
 
      {
       label: "BLack List",
-      icon: "block",
+      icon: "group",
       link: "/blacklist",
       roles: ["client"],
       exact:false,
@@ -256,6 +258,8 @@ userAvailableBalance: number = 0;
     this.totalRichcredit();
     this.totalTextcredit();
     this.AvailableBalance();
+    this.blockTextcredit();
+    this.blockRichcredit();
     
 
     this.role = sessionStorage.getItem("ROLE") || "";
@@ -407,5 +411,72 @@ userAvailableBalance: number = 0;
   if (!item) return '';
   return this.role === 'client' ? item.label : item.altLabel || item.label;
 }
+
+
+ blockRichcredit() {
+    const role = sessionStorage.getItem("ROLE");
+    const userName = sessionStorage.getItem("USER_NAME");
+
+    if (role === "agent") {
+      return;
+    }
+    const textPayload = {
+      loggedInUserName: userName,
+      creditType: "rich_card",
+      resellerName: role === "reseller" ? userName : "",
+      sellerName: role === "seller" ? userName : "",
+      clientName: role === "client" ? userName : "",
+      adminName: role === "admin" ? userName : "",
+    };
+
+    this.reportService.blockRichCredit(textPayload).subscribe(
+      (res) => {
+        // Access the text credit from the correct property
+        if (res.result === "Success" && res.data?.userCredit) {
+          this.availableRichBlockCredit =
+            res.data.userCredit.blockedCredit;
+          //console.log('Available Text Credit:', this.availableTextCredit);
+        } else {
+          //console.error('Unexpected response structure:', res);
+        }
+      },
+      (error) => {
+        console.error("Error fetching text credit:", error);
+      }
+    );
+  }
+
+ blockTextcredit() {
+    const role = sessionStorage.getItem("ROLE");
+    const userName = sessionStorage.getItem("USER_NAME");
+
+    if (role === "agent") {
+      return;
+    }
+    const textPayload = {
+      loggedInUserName: userName,
+      creditType: "text_message",
+      resellerName: role === "reseller" ? userName : "",
+      sellerName: role === "seller" ? userName : "",
+      clientName: role === "client" ? userName : "",
+      adminName: role === "admin" ? userName : "",
+    };
+
+    this.reportService.blockTextCredit(textPayload).subscribe(
+      (res) => {
+        // Access the text credit from the correct property
+        if (res.result === "Success" && res.data?.userCredit) {
+          this.availableTextBlockCredit =
+            res.data.userCredit.blockedCredit;
+          //console.log('Available Text Credit:', this.availableTextCredit);
+        } else {
+          //console.error('Unexpected response structure:', res);
+        }
+      },
+      (error) => {
+        console.error("Error fetching text credit:", error);
+      }
+    );
+  }
 
 }

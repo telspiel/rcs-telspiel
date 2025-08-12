@@ -72,14 +72,15 @@
                         </nz-input-group>
                       </nz-form-control>
                     </nz-form-item>
-                    <!-- <ng-container *ngIf="operator.get('operatorName')?.value === 'VODAFONE'">
+
+                  <ng-container *ngIf="operator.get('operatorName')?.value === 'VODAFONE' || operator.get('operatorName')?.value === 'Vi'">
                       <nz-form-item>
                         <nz-form-control nzErrorTip="*required" nzValidateStatus="FormControl">
                           <nz-form-label>Client ID</nz-form-label>
                           <nz-input-group>
                             <input
                               nz-input
-                              formControlName="clientId"
+                              formControlName="operatorTemplateClientId"
                               type="text"
                               placeholder="Client ID"
                             />
@@ -92,14 +93,16 @@
                           <nz-input-group>
                             <input
                               nz-input
-                              formControlName="clientSecret"
+                              formControlName="operatorTemplateSecret"
                               type="text"
                               placeholder="Client Secret"
                             />
                           </nz-input-group>
                         </nz-form-control>
                       </nz-form-item>
-                    </ng-container> -->
+                    </ng-container>
+
+
                   </div>
                 </nz-card>
               </div>
@@ -131,6 +134,8 @@
                 <tr>
                   <th>Operator Name</th>
                   <th>TPS</th>
+                  <th>Template Secret</th>
+                  <th>ClientId</th>
                 </tr>
               </thead>
               <tbody>
@@ -139,6 +144,10 @@
                   <td>
                     <b>{{ item.tps }}</b>
                   </td>
+
+                  <td>{{ item.operatorTemplateSecret }}</td>
+
+                  <td>{{item.operatorTemplateClientId}}</td>
                 </tr>
               </tbody>
             </nz-table>
@@ -187,38 +196,80 @@
               *ngFor="let operator of operatoreditData.controls; let i = index"
               [formGroupName]="i"
             >
-              <nz-card
-                [nzTitle]="operator.get('operatorName')?.value"
-                nzSize="small"
-              >
-                <div
-                  nz-row
-                  [nzGutter]="6"
-                  style="
-                    display: flex;
-                    flex-wrap: wrap;
-                    align-items: center;
-                    gap: 10px;
-                  "
-                >
-                  <nz-form-item>
-                    <nz-form-control
-                      nzErrorTip="*required"
-                      nzValidateStatus="FormControl"
-                    >
-                      <nz-form-label>TPS</nz-form-label>
-                      <nz-input-group>
-                        <input
-                          nz-input
-                          formControlName="traficVolume"
-                          type="number"
-                          placeholder="TPS"
-                        />
-                      </nz-input-group>
-                    </nz-form-control>
-                  </nz-form-item>
-                </div>
-              </nz-card>
+             <nz-card
+  [nzTitle]="operator.get('operatorName')?.value"
+  nzSize="small"
+>
+  <div
+    nz-row
+    [nzGutter]="6"
+    style="
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    "
+  >
+    <nz-form-item>
+      <nz-form-control
+        nzErrorTip="*required"
+        nzValidateStatus="FormControl"
+      >
+        <nz-form-label>TPS</nz-form-label>
+        <nz-input-group>
+          <input
+            nz-input
+            formControlName="traficVolume"
+            type="number"
+            placeholder="TPS"
+          />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+
+    <ng-container *ngIf="operator.get('operatorName')?.value === 'VODAFONE' || operator.get('operatorName')?.value === 'Vi'">
+      <div
+        style="
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          gap: 10px;
+        "
+      >
+        <nz-form-item>
+          <nz-form-control nzErrorTip="*required" nzValidateStatus="FormControl">
+            <nz-form-label>Client ID</nz-form-label>
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="operatorTemplateClientId"
+                type="text"
+                placeholder="Client ID"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+
+        <nz-form-item>
+          <nz-form-control nzErrorTip="*required" nzValidateStatus="FormControl">
+            <nz-form-label>Client Secret</nz-form-label>
+            <nz-input-group>
+              <input
+                nz-input
+                formControlName="operatorTemplateSecret"
+                type="text"
+                placeholder="Client Secret"
+              />
+            </nz-input-group>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </ng-container>
+  </div>
+</nz-card>
+
+               
+
             </div>
           </div>
           <div style="text-align: center; margin-top: 10px">

@@ -92,6 +92,8 @@ export class TpsManagerComponent {
             this.fb.group({
               operatorName: [op.operatorName, Validators.required],
               traficVolume: [op.tps, Validators.required],
+              operatorTemplateClientId: [op.operatorTemplateClientId || ""],      
+              operatorTemplateSecret: [op.operatorTemplateSecret || ""]
             })
           );
         });
@@ -130,6 +132,8 @@ export class TpsManagerComponent {
           this.fb.group({
             operatorName: [opName, Validators.required],
             traficVolume: ["", Validators.required],
+            operatorTemplateClientId: [""],
+            operatorTemplateSecret:[""]
           })
         );
       }
@@ -168,8 +172,8 @@ export class TpsManagerComponent {
         this.fb.group({
           operatorName: [op],
           tps: ["", Validators.required],
-          // clientId: [""],
-          // clientSecret:[""]
+          operatorTemplateClientId: [""],
+          operatorTemplateSecret:[""]
         })
       );
     });
@@ -236,6 +240,7 @@ export class TpsManagerComponent {
               "success",
               "success"
             );
+            this.operatorForm.reset();
           },
           error: (err) => {
             this.tostService.publishNotification(
@@ -267,15 +272,17 @@ export class TpsManagerComponent {
       operatorData: formValue.operatoreditData.map((op: any) => ({
         operatorName: op.operatorName,
         tps: op.traficVolume,
+        operatorTemplateClientId: op.operatorTemplateClientId || "",
+        operatorTemplateSecret: op.operatorTemplateSecret || ""
       })),
     };
 
     this.botService.edittps(payload).subscribe({
       next: (res) => {
         this.tostService.publishNotification(res.message, "success", "success");
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+         this.operatoreditForm.reset();
+        //  this.operatorData.clear();
+
       },
       error: (err) => {
         this.tostService.publishNotification(
