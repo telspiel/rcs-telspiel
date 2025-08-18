@@ -6,6 +6,7 @@ import { differenceInCalendarDays } from 'date-fns';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { formatDate } from '@angular/common';
 import { BrandService } from 'src/app/service/brand.service';
+import { AccountManagerService } from 'src/app/service/account-manager.service';
 
 
 
@@ -28,6 +29,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   userCreation= inject(UserCreationService)
   toastService=inject(ToastService)
   status =""
+   reportList : any;
     selectedColor: string = '';
   today = new Date();
     role=sessionStorage.getItem('ROLE')|| ""
@@ -41,6 +43,13 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   Clientlist : any []=[]
   ResllerList : any []=[]
   SellerList :any []=[]
+
+  
+  selectedReseller: string | null = null;
+  selectedSeller: string | null = null;
+  selectedClient: string | null = null;
+  selectedadmin: string | null = null;
+  brandDataList: any[] = [];
  
   CreditHistory ="true";
   MobileNumberMasking="true";
@@ -49,6 +58,7 @@ TwentyFourHrFromCampTime = '24HrFromCampTime';
   client="";
   UserName = "";
   email="";
+  accountManagerName="";
   Password="";
   themeColor="";
   // useraccounttype="";
@@ -115,7 +125,7 @@ dlrDefaltBody="{'message_id':'#messageid#','sent_time':'#senttime#','dlr_time':'
     }
     return [];
   }
-  constructor(private fb: FormBuilder, private ngxLoader: NgxUiLoaderService,) {
+  constructor(private fb: FormBuilder, private ngxLoader: NgxUiLoaderService, private brandService: BrandService ,  private accountService : AccountManagerService ) {
     this.billingType = (sessionStorage.getItem('billingType'));
     this.selectForm = this.fb.group({
       Reseller: [this.Reseller,],
@@ -136,6 +146,7 @@ dlrDefaltBody="{'message_id':'#messageid#','sent_time':'#senttime#','dlr_time':'
      usertype: [null],
       UserName: [{value:'', disabled:'true'}],
       email: ["", [Validators.required, Validators.email]],
+      accountManagerName : [this.accountManagerName],
       Password: [this.Password],
       themeColor: [this.themeColor],
       // useraccounttype: [this.useraccounttype],
@@ -223,8 +234,7 @@ dlrDefaltBody="{'message_id':'#messageid#','sent_time':'#senttime#','dlr_time':'
 
 
   ngOnInit(){
-    
-    
+      this.viewAccount();  
     this.updateForm.get('dlrRequestBodyType')?.valueChanges.subscribe((value: string) => {
       if (value === "Default") {
         this.updateForm.get('dlrRequestBody')?.setValue(this.dlrDefaltBody);
@@ -268,6 +278,7 @@ dlrDefaltBody="{'message_id':'#messageid#','sent_time':'#senttime#','dlr_time':'
        themeColor: this.updateForm.value.themeColor,
        accountType: "web",
        email: this.updateForm.value.email,
+       accountManagerName : this.updateForm.value.accountManagerName,
       // billingMethod: [null],
       walletBillingMethod: this.updateForm.value.billingMethod === true ? true: "",
       creditBillingMethod: this.updateForm.value.billingMethod === false ? true : "",
@@ -440,6 +451,7 @@ const formattedPriority =
    priority: formattedPriority,
     UserName: res.data.user.userName,
     email: res.data.user.email,
+    accountManagerName : res.data.user.accountManagerName,
     campaignFrequency: res.data.user.campaignFrequency,
     creditRefund: res.data.user.creditRefund === 'true' ? true : false,
     messageExpiry: res.data.user.messageExpiry === 'true' ? true : false,
@@ -489,5 +501,22 @@ const formattedPriority =
   const value= this.client|| this.Reseller|| this.Seller || this.Admin
   this.getUserData(value)
 }
+
+
+
+  viewAccount(){
+      let dt  = {
+      loggedInUserName : sessionStorage.getItem('USER_NAME'),
+      }
+
+      this.accountService.viewAccont(dt).subscribe((res)=>{
+
+        this.reportList  = res.dataList; 
+
+
+
+      })
+    };
+  
 
 }

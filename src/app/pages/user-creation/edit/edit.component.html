@@ -128,6 +128,44 @@
           </nz-form-control>
         </nz-form-item>
       </div>
+
+
+         <div class="" nz-col [nzSpan]="12" *ngIf="role==='admin'">
+        <nz-form-item>
+          <nz-form-label
+            nz-col
+            [nzSpan]="6"
+            nzLabelAlign="left"
+            for="account manager"
+          >
+            Account Manager<span style="color: red">*</span></nz-form-label
+          >
+          <nz-form-control
+            nz-col
+            nzSpan="16"
+            nzErrorTip="Select user type"
+            [nzValidateStatus]="getStatus('usertype')!"
+          >
+          <nz-select 
+           id="Reseller" 
+            nzPlaceHolder="Select Account Manager" 
+            formControlName="accountManagerName"
+           >
+          <nz-option 
+           *ngFor="let account of reportList" 
+           [nzLabel]="account.userName" 
+           [nzValue]="account.userName"
+           ></nz-option>
+       </nz-select>
+
+        
+          </nz-form-control>
+        </nz-form-item>
+      </div> 
+
+
+
+
         <div nz-col [nzSpan]="12">
         <nz-form-item>
           <nz-form-label
@@ -558,7 +596,7 @@
       </nz-select>
     </nz-form-control>
   </nz-form-item>
-</div>
+        </div>
 
          <div nz-col [nzSpan]="12" *ngIf="updateForm.get('dlrHandover')?.value === true ">
             <nz-form-item >
