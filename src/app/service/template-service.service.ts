@@ -37,6 +37,7 @@ const APPROVEDBOT="/rcs-reseller-service/botService/getApprovedBotByBotName"
 const InActivetemp="/rcs-reseller-service/templateService/getAllApprovedAndInActiveTemplateByUserName"
 const updatetemplate="/rcs-reseller-service/templateService/updateTemplateActive"
 const Activetemp = "/rcs-reseller-service/templateService/getAllApprovedAndActiveTemplateByUserName"
+const addFallback='/rcs-reseller-service/templateService/addFallback'
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +55,14 @@ export class TemplateService {
   constructor(
     private httpService: HttpClient
   ) { }
+  addFallback(dt:any){
+    const headers = new HttpHeaders({
+      "Authorization" : `${sessionStorage.getItem('TOKEN')}`,
+    })
+    const url  = `${BASE_URL}${addFallback}`
+    return this.httpService.post<any>(url,dt, { headers });
+  }
+
   getApprovedBotByBotName(dt:any){
     const headers = new HttpHeaders({
       "Authorization" : `${sessionStorage.getItem('TOKEN')}`,

@@ -92,7 +92,7 @@ export class TemplateComponent {
   filteredData: any[]= []
   searchControl = new FormControl('');
   logedinuser=sessionStorage.getItem('USER_NAME') 
-
+  payload={}
 
   shortByTemplateName=(a: any, b: any) => a.templateTitle.localeCompare(b.templateTitle);
   sortByDate = (a: any, b: any) => {
@@ -417,19 +417,22 @@ applyFilteractive(): void {
 
   // ======================================================
 
-  configureTemplate(templateId: string): void {
-    console.log("Configuring template ID");
-  
+  configureTemplate(templateName: string): void {
+    console.log("Configuring template ID", templateName);
+    // this.payload= {...this.configForm.value, richrichTemplateData: { name:templateName }};
     // Reset form with default values
     this.configForm.reset({
-      fallback: 'N', // SMS fallback = No by default
-      fallbackText: '',
+      loggedInUserName: sessionStorage.getItem('USER_NAME'),
+      isSmsfallback: 'N', // SMS fallback = No by default
+      fallbackSms: '',
       smsApiEndpoint: '',
-      whatsapp: 'N', // WhatsApp fallback = No by default
-      fallbackTextwhatsapp: '',
+      isWhatsappFallback: 'N', // WhatsApp fallback = No by default
+      fallbackWhatsapp: '',
       whatsappApiEndpoint: ''
     });
-  
+    this.selectedTemplate = templateName;
+    console.log("Selected Template:", this.selectedTemplate);
+
     // Open the modal
     this.isConfigModalVisible = true;
   }
@@ -440,24 +443,71 @@ selectedTemplate: any = null;
 
 
 configForm: FormGroup = this.fb.group({
-  fallback: ['N'],
-  fallbackText: [''],
+  loggedInUserName: [sessionStorage.getItem('USER_NAME')],
+  isSmsfallback: ['N'],
+  fallbackSms: [''],
   smsApiEndpoint: [''],
-  whatsapp: ['N'],
-  fallbackTextwhatsapp: [''],
-  whatsappApiEndpoint: ['']
+  isWhatsappFallback: ['N'],
+  fallbackWhatsapp: [''],
+  whatsappApiEndpoint: [''],
 });
 
+ngAfterViewInit() {
+  // Listen for changes to isSmsfallback and update validators accordingly
+  this.configForm.get('isSmsfallback')?.valueChanges.subscribe((val) => {
+    const fallbackSmsControl = this.configForm.get('fallbackSms');
+    const fallbackApiControl = this.configForm.get('smsApiEndpoint');
+    if (val && val.toLowerCase() === 'y') {
+      fallbackSmsControl?.setValidators([Validators.required]);
+      fallbackApiControl?.setValidators([Validators.required]);
+    } else {
+      fallbackSmsControl?.clearValidators();
+      fallbackApiControl?.clearValidators();
+    }
+    fallbackSmsControl?.updateValueAndValidity();
+    fallbackApiControl?.updateValueAndValidity();
+  });
+  this.configForm.get('isWhatsappFallback')?.valueChanges.subscribe((val) => {
+    const fallbackWhatsappControl = this.configForm.get('fallbackWhatsapp');
+    const fallbackWhatsappApiControl = this.configForm.get('whatsappApiEndpoint');
+    if (val && val.toLowerCase() === 'y') {
+      fallbackWhatsappControl?.setValidators([Validators.required]);
+      fallbackWhatsappApiControl?.setValidators([Validators.required]);
+    } else {
+      fallbackWhatsappControl?.clearValidators();
+      fallbackWhatsappApiControl?.clearValidators();
+    }
+    fallbackWhatsappControl?.updateValueAndValidity();
+    fallbackWhatsappApiControl?.updateValueAndValidity();
+  });
+}
+
 get isFallbackEnabledSms(): boolean {
-  return this.configForm.get('fallback')?.value === 'Y';
+  return this.configForm.get('isSmsfallback')?.value === 'Y';
 }
 
 get isFallbackEnabledWhatsapp(): boolean {
-  return this.configForm.get('whatsapp')?.value === 'Y';
+  return this.configForm.get('isWhatsappFallback')?.value === 'Y';
 }
 
 
-  handleConfigOk(){
+  handleConfigOk(): void {
+    
+    const payload= {...this.configForm.value, richrichTemplateData: { name: this.selectedTemplate }};
+    if (this.configForm.invalid) {
+      this.configForm.markAllAsTouched();
+      this.configForm.updateValueAndValidity();
+      this.toastService.publishNotification('error', 'Please fill all required fields.', 'error');
+      return;
+    }
+    this.templateService.addFallback(payload).subscribe({
+      next:(res)=>{
+        this.toastService.publishNotification('success', res.message, 'success')
+      },
+      error:(err)=>{
+        this.toastService.publishNotification('error',"Something went wrong",'error')
+      }
+    })
     this.isConfigModalVisible=false
   }
   

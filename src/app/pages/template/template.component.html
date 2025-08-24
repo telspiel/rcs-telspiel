@@ -178,7 +178,7 @@
                   nzShape="circle"
                   nz-tooltip
                   nzTooltipTitle="Fallback"
-                  (click)="configureTemplate(template.templateId); $event.preventDefault()"
+                  (click)="configureTemplate(template.templateTitle); $event.preventDefault()"
                 >
                   <i nz-icon nzType="setting" nzTheme="outline"></i>
                 </button>
@@ -186,7 +186,7 @@
               <nz-modal
                 [(nzVisible)]="isConfigModalVisible"
                 [nzWidth]="'1000px'"
-                [nzTitle]="'Fallback - '"
+                [nzTitle]="'Fallback'"
                 (nzOnCancel)="handleConfigCancel()"
                 (nzOnOk)="handleConfigOk()"
               >
@@ -198,7 +198,7 @@
                       Do you want automatic fallback to SMS?
                     </nz-form-label>
                     <nz-form-control>
-                      <nz-radio-group formControlName="fallback">
+                      <nz-radio-group formControlName="isSmsfallback">
                         <label nz-radio [nzValue]="'Y'">Yes</label>
                         <label nz-radio [nzValue]="'N'">No</label>
                       </nz-radio-group>
@@ -208,7 +208,7 @@
                   <nz-form-item *ngIf="isFallbackEnabledSms">
                     <nz-form-label><span style="color: red">*</span> Fallback SMS</nz-form-label>
                     <nz-form-control>
-                      <textarea nz-input formControlName="fallbackText" placeholder="Enter fallback SMS content"></textarea>
+                      <textarea nz-input formControlName="fallbackSms" placeholder="Enter fallback SMS content"></textarea>
                     </nz-form-control>
                   </nz-form-item>
                   
@@ -231,7 +231,7 @@
                       Do you want automatic fallback to WhatsApp?
                     </nz-form-label>
                     <nz-form-control>
-                      <nz-radio-group formControlName="whatsapp">
+                      <nz-radio-group formControlName="isWhatsappFallback">
                         <label nz-radio [nzValue]="'Y'">Yes</label>
                         <label nz-radio [nzValue]="'N'">No</label>
                       </nz-radio-group>
@@ -244,7 +244,7 @@
                       <textarea
                         nz-input
                         rows="4"
-                        formControlName="fallbackTextwhatsapp"
+                        formControlName="fallbackWhatsapp"
                         placeholder="Enter fallback WhatsApp content"
                       ></textarea>
                     </nz-form-control>
