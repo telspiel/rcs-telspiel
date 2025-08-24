@@ -423,7 +423,7 @@ applyFilteractive(): void {
     // Reset form with default values
     this.configForm.reset({
       loggedInUserName: sessionStorage.getItem('USER_NAME'),
-      isSmsfallback: 'N', // SMS fallback = No by default
+      isSmsFallback: 'N', // SMS fallback = No by default
       fallbackSms: '',
       smsApiEndpoint: '',
       isWhatsappFallback: 'N', // WhatsApp fallback = No by default
@@ -444,7 +444,7 @@ selectedTemplate: any = null;
 
 configForm: FormGroup = this.fb.group({
   loggedInUserName: [sessionStorage.getItem('USER_NAME')],
-  isSmsfallback: ['N'],
+  isSmsFallback: ['N'],
   fallbackSms: [''],
   smsApiEndpoint: [''],
   isWhatsappFallback: ['N'],
@@ -454,7 +454,7 @@ configForm: FormGroup = this.fb.group({
 
 ngAfterViewInit() {
   // Listen for changes to isSmsfallback and update validators accordingly
-  this.configForm.get('isSmsfallback')?.valueChanges.subscribe((val) => {
+  this.configForm.get('isSmsFallback')?.valueChanges.subscribe((val) => {
     const fallbackSmsControl = this.configForm.get('fallbackSms');
     const fallbackApiControl = this.configForm.get('smsApiEndpoint');
     if (val && val.toLowerCase() === 'y') {
@@ -483,7 +483,7 @@ ngAfterViewInit() {
 }
 
 get isFallbackEnabledSms(): boolean {
-  return this.configForm.get('isSmsfallback')?.value === 'Y';
+  return this.configForm.get('isSmsFallback')?.value === 'Y';
 }
 
 get isFallbackEnabledWhatsapp(): boolean {
@@ -493,7 +493,7 @@ get isFallbackEnabledWhatsapp(): boolean {
 
   handleConfigOk(): void {
     
-    const payload= {...this.configForm.value, richrichTemplateData: { name: this.selectedTemplate }};
+    const payload= {...this.configForm.value, richTemplateData: { name: this.selectedTemplate }};
     if (this.configForm.invalid) {
       this.configForm.markAllAsTouched();
       this.configForm.updateValueAndValidity();
