@@ -61,6 +61,7 @@ export class TemplateComponent {
   loggedInUserName: string = '';
   role: string =sessionStorage.getItem('ROLE')||"";
   cardTitle: string = '';
+  templateData:any
   carouselList:{ id:number,cardTitle: string;cardDescription:string;fileName:string | null; }[] =[
     {
       id:0,
@@ -235,6 +236,33 @@ applyFilteractive(): void {
 
 
 
+  getTemplateList(){
+     let dt = {
+      loggedInUserName: sessionStorage.getItem('USER_NAME'),
+    };
+
+  this.reportService.templatelist(dt).subscribe((res: any) => {
+  if (res.data && res.data.templateList) {
+    this.templateList = [...res.data.templateList].reverse(); // full list
+    this.messageTemplates = [...this.templateList];
+    this.templateData = res.data.templateDataList;
+    this.applyFilteractive();
+  } else {
+    this.templateList = [];
+    this.filteredTemplateList = [];
+    this.messageTemplates = [];
+    this.filteredData = [];
+  }
+}, (error) => {
+  console.error('Failed to fetch template list:', error);
+  this.templateList = [];
+  this.filteredTemplateList = [];
+  this.messageTemplates = [];
+  this.filteredData = [];
+});
+
+  }
+
 
 
   ngOnInit() {
@@ -250,7 +278,8 @@ applyFilteractive(): void {
   this.reportService.templatelist(dt).subscribe((res: any) => {
   if (res.data && res.data.templateList) {
     this.templateList = [...res.data.templateList].reverse(); // full list
-    this.messageTemplates = [...this.templateList];           // optional if used elsewhere
+    this.messageTemplates = [...this.templateList];
+    this.templateData = res.data.templateDataList;
     this.applyFilteractive();
   } else {
     this.templateList = [];
@@ -431,8 +460,19 @@ applyFilteractive(): void {
       whatsappApiEndpoint: ''
     });
     this.selectedTemplate = templateName;
-    console.log("Selected Template:", this.selectedTemplate);
-
+    console.log("Selected Template:", this.templateData.find((t: any) => t.name === templateName));
+    const data = this.templateData.find((t: any) => t.name === templateName);
+    if (data) {
+    this.configForm.patchValue({
+      loggedInUserName: sessionStorage.getItem('USER_NAME'),
+      isSmsFallback: data.isFallbackSms || "N", // SMS fallback = No by default
+      fallbackSms: data.fallbackSms,
+      smsApiEndpoint: data.smsApiEndpoint,
+      isWhatsappFallback: data.isFallbackWhatsapp || "N", // WhatsApp fallback = No by default
+      fallbackWhatsapp: data.fallbackWhatsapp,
+      whatsappApiEndpoint: data.whatsappApiEndpoint
+    });
+  }
     // Open the modal
     this.isConfigModalVisible = true;
   }
@@ -503,6 +543,7 @@ get isFallbackEnabledWhatsapp(): boolean {
     this.templateService.addFallback(payload).subscribe({
       next:(res)=>{
         this.toastService.publishNotification('success', res.message, 'success')
+        this.getTemplateList()
       },
       error:(err)=>{
         this.toastService.publishNotification('error',"Something went wrong",'error')
