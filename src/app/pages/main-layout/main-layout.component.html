@@ -64,7 +64,7 @@
           style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center"
         >
 
-          <span >
+          <span *ngIf="role !== 'accountManager'">
             Block Rich Credit:
             <span >{{ availableRichBlockCredit }}</span>
             <button
@@ -80,7 +80,7 @@
           </span>
 
 
-            <span>
+            <span *ngIf="role !== 'accountManager'">
             Block Text Credit:
             <span>{{ availableTextBlockCredit }}</span>
             <button
@@ -96,7 +96,7 @@
           </span> 
 
           
-          <span>
+          <span *ngIf="role !== 'accountManager'">
             Available Rich Credit:
             <span style="margin-left: 4px">{{ availableRichCredit }}</span>
             <button
@@ -111,7 +111,7 @@
             </button>
           </span>
 
-          <span>
+          <span *ngIf="role !== 'accountManager'">
             Available Text Credit:
             <span style="margin-left: 4px">{{ availableTextCredit }}</span>
             <button
@@ -126,7 +126,7 @@
             </button>
           </span>
 
-          <span>
+          <span *ngIf="role !== 'accountManager'">
             Available Wallet Balance:
             <span style="margin-left: 4px">{{ userAvailableBalance }}</span>
             <button

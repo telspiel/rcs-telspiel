@@ -17,6 +17,8 @@ import { BASE_URL } from 'src/app/config/app-config';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+  
+  role: string =sessionStorage.getItem('ROLE')||"";
 
   selectedOption: string = 'brand'; 
   pageSize = 10;

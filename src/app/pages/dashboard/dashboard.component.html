@@ -1,8 +1,8 @@
-<div class="card-container">
+<div class="card-container"  [class.account-manager]="role === 'accountManager'">
   <!-- <nz-header class="site-page-header" nzTitle="Summary"></nz-header> -->
   <nz-tabset nzType="card">
     <nz-header class="site-page-header" nzTitle="Summary"></nz-header>
-    <nz-tab [nzTitle]="titleTemplate1">
+    <nz-tab  *ngIf="role !== 'accountManager'" [nzTitle]="titleTemplate1">
       <ng-template #titleTemplate1>
         <span nz-icon nzType="pie-chart" nzTheme="outline"></span>
         Billing Dashboard
@@ -361,19 +361,14 @@
             <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'brand'">Brand Name</th>
             <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'template'">Template Name</th>
             <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'campaign'">Campaigns Name</th>
-            
+
             <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesSubmitted">
-              <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Received
+              <span style="display: flex; align-items: center; gap:8px;">Summary&nbsp;Date
               <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
                 nzTooltipTitle="The total number of messages requested."></i>
               </span>
             </th>
-            <!-- <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesSubmitted">
-              <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Queued
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The total number of messages Queued."></i>
-              </span>
-            </th> -->
+            
             <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesSubmitted">
               <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Submitted
               <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
@@ -452,6 +447,7 @@
         
           <tr>
             <th nzAlign="center">Total</th>
+            <th nzAlign="center"></th>
             <th nzAlign="center">{{totalRequest}}</th>
             <!-- <th nzAlign="center">{{totalQueued}}</th> -->
           
@@ -477,7 +473,9 @@
               <td nzAlign="center" *ngIf="selectedOption== 'brand'" nzEllipsis>{{item.brandName}}</td>
               <td nzAlign="center" *ngIf="selectedOption== 'template'" nzEllipsis>{{item.templateName}}</td>
               <td nzAlign="center" *ngIf="selectedOption== 'campaign'" nzEllipsis>{{item.campaignName}}</td>
-              <!-- <td nzAlign="center">{{ item.date| date:'hh:mm a' }}</td> -->
+
+              <td nzAlign="center">{{ item.summaryDate || '0' }}</td>
+
               <td nzAlign="center">{{ item.totalRequest || '0' }}</td>
               <!-- <td nzAlign="center">{{ item.countQueued || '0' }}</td> -->
               <td nzAlign="center">{{ item.totalSubmitted || '0' }}</td>

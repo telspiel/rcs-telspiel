@@ -103,7 +103,7 @@ userAvailableBalance: number = 0;
       label: "Report",
       icon: "pie-chart",
       link: "/detailed-report",
-      roles: ["admin", "seller", "reseller", "client" ,"accountManager"],
+      roles: ["admin", "seller", "reseller", "client"],
       exact:false,
       group:'detailed-report'
     },
@@ -121,7 +121,7 @@ userAvailableBalance: number = 0;
     label: "Campaign Report",
     icon: "notification",
     link: "/quick-campaign",
-    roles: [ "admin", "seller", "reseller", "superadmin" ,"accountManager"],
+    roles: [ "admin", "seller", "reseller", "superadmin"],
     exact: false,
     group: 'campaign'
   },
@@ -137,7 +137,7 @@ userAvailableBalance: number = 0;
       label: "Capability Tester",
       icon: "check-circle",
       link: "/capablityTest",
-      roles: ["client"],
+      roles: ["admin"],
       exact:false,
       group:'capablityTest'
     },

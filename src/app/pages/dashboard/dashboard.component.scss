@@ -37,10 +37,17 @@
   background: transparent;
 }
 
-.card-container ::ng-deep>.ant-tabs-card .ant-tabs-tab-active {
+/* Always apply border and background */
+.card-container ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
   border-color: #fff;
   background: #fff;
 }
+
+/* Only apply width:100% when account-manager class is present */
+.card-container.account-manager ::ng-deep > .ant-tabs-card .ant-tabs-tab-active {
+  width: 100%;
+}
+
 
 .nz-card {
   border: 1px solid #ccc; /* Default border */
@@ -215,3 +222,8 @@ nz-table td {
   color: #ffcc29;
   border: #373435;
 }
+
+//New styling
+// .ant-tabs-tab {
+//   width: 100% !important;
+// }
