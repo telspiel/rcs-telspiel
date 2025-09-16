@@ -90,6 +90,8 @@ import { AddAccountComponent } from "./pages/account-manager/add-account/add-acc
 import { EditAccountComponent } from "./pages/account-manager/edit-account/edit-account.component";
 
 import { ViewAccountComponent } from "./pages/account-manager/view-account/view-account.component";
+import { GenerateApiComponent } from "./pages/generate-api/generate-api.component";
+
 
 const routes: Routes = [
   {
@@ -105,6 +107,7 @@ const routes: Routes = [
     
   ]
 },
+{ path: "generate-api", component:GenerateApiComponent, data:{link:"generate-api"} },
        { path: "addphonebook", component: AddPhonebookComponent},
        { path: "viewphonebook", component: ViewphonebookComponent },
       {

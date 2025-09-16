@@ -6,6 +6,8 @@ const GETALLBILLINGPLAN="/rcs-reseller-service/billingService/getAllBillingPlan"
 const getAvailableBalanceForUser='/rcs-reseller-service/walletService/getAvailableBalanceForUser'
 const WALLETHISTORY='/rcs-reseller-service/walletService/getWalletHistory'
 const UPDATEWALLET='/rcs-reseller-service/walletService/updateWalletForUser'
+const GENERATEUSERAPI='/rcs-reseller-service/pushApiKeyService/generateUserApiKey'
+const GETUSERAPIKEY='/rcs-reseller-service/pushApiKeyService/getUserApiKey'
 
 
 @Injectable({
@@ -54,4 +56,22 @@ export class WalletService {
       return this.httpService.post<any>(URL,dt, { headers });
 
     }
+ generateUserApiKey(dt:any){
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `${sessionStorage.getItem('TOKEN')}`
+  });
+  const URL = `${BASE_URL}${GENERATEUSERAPI}`;
+  return this.httpService.post<any>(URL,dt, { headers });
+}
+
+getUserApiKey(dt:any){
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': `${sessionStorage.getItem('TOKEN')}`
+  });
+  const URL = `${BASE_URL}${GETUSERAPIKEY}`;
+  return this.httpService.post<any>(URL,dt, { headers });
+}
+
 }

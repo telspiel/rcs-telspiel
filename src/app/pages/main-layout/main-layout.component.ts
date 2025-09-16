@@ -141,6 +141,14 @@ userAvailableBalance: number = 0;
       exact:false,
       group:'capablityTest'
     },
+    {
+      label: "Generate Api Key",
+      icon: "api",
+      link: "/generate-api",
+      roles: ["superadmin", "admin", "seller", "reseller"],
+      exact:false,
+      group:'generate-api'
+  },
 
     // {
     //   label: "Domain Manager",
