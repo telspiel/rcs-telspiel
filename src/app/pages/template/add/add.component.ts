@@ -1899,7 +1899,7 @@ export class AddComponent {
         richTemplateData: {
           name: formData.name,
           fallbackText: formData.fallbackText,
-          type: isRichCard ? "rich_card" : "text_message",
+          type: "text_message",
           templateUseCase: "promo",
           height: formData.height,
           width: formData.width,

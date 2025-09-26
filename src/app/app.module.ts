@@ -180,6 +180,7 @@ import { AccountManagerComponent } from './pages/account-manager/account-manager
 import { AddAccountComponent } from './pages/account-manager/add-account/add-account.component';
 import { EditAccountComponent } from './pages/account-manager/edit-account/edit-account.component';
 import { ViewAccountComponent } from './pages/account-manager/view-account/view-account.component';
+import { GenerateApiComponent } from './pages/generate-api/generate-api.component';
 
 // import { ApptpsComponent } from './pages/tps-manager/apptps/apptps.component';
 // import { UpdatetpsComponent } from './pages/tps-manager/updatetps/updatetps.component';
@@ -228,6 +229,7 @@ registerLocaleData(en);
     CampaignReportComponent,
     ConfigbotComponent,
     TestdeviceComponent,
+    GenerateApiComponent,
     
     UserCreationComponent,
     AddUserComponent,
