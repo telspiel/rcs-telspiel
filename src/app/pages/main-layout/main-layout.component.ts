@@ -137,7 +137,7 @@ userAvailableBalance: number = 0;
       label: "Capability Tester",
       icon: "check-circle",
       link: "/capablityTest",
-      roles: ["admin"],
+      roles: ["admin", "client"],
       exact:false,
       group:'capablityTest'
     },
