@@ -32,7 +32,7 @@ export class DetailedReportComponent {
   data:any
   status:any
   date: [Date, Date] = [new Date(), new Date()];
-  source: string = 'all';
+  source: string = '';
   isLoading=false
   // Admin=""
 
