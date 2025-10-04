@@ -171,7 +171,7 @@
             *ngIf="templateForm.get('type')?.value !== 'TextMessage' && templateForm.get('type')?.value !== 'TextMessagewithpdf' ">
             <nz-form-label nzFor="mediaUpload">Image/video <span style="color: red;"> * </span></nz-form-label>
             <nz-form-control>
-              <div style="display: flex; flex-direction: column; gap:10px;">
+              <!-- <div style="display: flex; flex-direction: column; gap:10px;">
                 <span style="color:red" *ngIf="templateForm.get('type')?.value === 'carousel'  && error ">*Please select the card.</span>
                 <span style="color:red" *ngIf="templateForm.get('type')?.value === 'carousel' && !templateForm.get('height')?.value && !templateForm.get('width')?.value && !error">*Please select height and width.</span>
                 <span style="color:red" *ngIf="templateForm.get('type')?.value === 'rich_card'&& !templateForm.get('cardOrientation')?.value">*plase select the card oriantation</span>
@@ -211,9 +211,9 @@
                 <button style="width: 150px;" nz-button nzType="primary" (click)="showModal()" [disabled]="(templateForm.get('type')?.value === 'rich_card' && templateForm.get('cardOrientation')?.value === 'HORIZONTAL' || templateForm.get('type')?.value === 'rich_card' && templateForm.get('cardOrientation')?.value === 'VERTICAL' && templateForm.get('height')?.value || (templateForm.get('type')?.value === 'carousel' && templateForm.get('height')?.value && templateForm.get('width')?.value && selectedCardIndex >= 0)) ? false : true">
                   <span>Upload</span>
                 </button>
-                </div>
+                </div> -->
 
-              <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+              <!-- <nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent"
                 [nzFooter]="modalFooter" (nzOnCancel)="handleCancel()">
 
 
@@ -266,7 +266,7 @@
                     </nz-upload>
 
                     
-                        <!-- <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                         <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
                           [aspectRatio]="
                               (templateForm.get('type')?.value === 'carousel' && templateForm.get('height')?.value === 'SHORT_HEIGHT' && templateForm.get('width')?.value === 'SMALL_WIDTH') ? 960 / 720
                             : (templateForm.get('type')?.value === 'carousel' && templateForm.get('height')?.value === 'SHORT_HEIGHT' && templateForm.get('width')?.value === 'MEDIUM_WIDTH') ? 1440 / 720 
@@ -295,7 +295,7 @@
                             : templateForm.get('type')?.value === 'rich_card' && templateForm.get('cardOrientation')?.value === 'HORIZONTAL' ? 1024
                             : 480" 
                           (imageCropped)="imageCropped($event)">
-                        </image-cropper> -->
+                        </image-cropper> 
                         <app-upload-modal
                         *ngIf="selectedFile1"
                         [imageFile]="selectedFile1"
@@ -335,7 +335,7 @@
                           <p class="ant-upload-text">Click or drag a video here to upload</p>
                           <p class="ant-upload-hint">Only MP4 allowed.</p>
                         </nz-upload>
-                        <!-- <span style="color: red;" *ngIf="videoSizeError">{{videoSizeError}}</span>  -->
+                        <span style="color: red;" *ngIf="videoSizeError">{{videoSizeError}}</span> 
                         </div>  
 
                     </nz-tab>
@@ -347,14 +347,20 @@
                   <button nz-button nzType="default" (click)="handleCancel()">Cancel</button>
                   <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">Submit</button>
                 </ng-template> 
-              </nz-modal>
+              </nz-modal> -->
 
 
-              <!-- <nz-upload nzAction="/uplod" nzName="file" (nzChange)="onFileChange($event)" >
-                <button nz-button>
+              <nz-upload 
+              [nzAction]="apiUrl" 
+                        [nzHeaders]="{ authorization: token }" 
+                          [nzData]="{'userName': userName}" 
+                          (nzChange)="handleUploadChange($event)" 
+                          nzAccept=".png,.jpg,.jpeg,.mp4"
+                          >
+                <button nz-button >
                   <i nz-icon nzType="upload"></i> Upload File
                 </button>
-              </nz-upload> -->
+              </nz-upload>
 
             </nz-form-control>
 
@@ -380,11 +386,19 @@
           <nz-form-item *ngIf="(templateForm.get('type')?.value === 'carousel' && carouselList[selectedCardIndex]?.mediaUrl?.includes('.mp4')) || (templateForm.get('standAloneFileName')?.value && templateForm.get('standAloneFileName')?.value.includes('.mp4'))">
             <nz-form-label nzFor="file">Video Thumbnail</nz-form-label>
             <div class="">
-              <button style="width: 150px;" nz-button nzType="primary" (click)="showthum()" [disabled]="(templateForm.get('type')?.value === 'rich_card' && templateForm.get('cardOrientation')?.value === 'HORIZONTAL' || templateForm.get('type')?.value === 'rich_card' && templateForm.get('cardOrientation')?.value === 'VERTICAL' && templateForm.get('height')?.value || (templateForm.get('type')?.value === 'carousel' && templateForm.get('height')?.value && templateForm.get('width')?.value && selectedCardIndex >= 0)) ? false : true">
-                <span>Upload</span>
-              </button>
+              <nz-upload 
+              [nzAction]="apiUrl" 
+                        [nzHeaders]="{ authorization: token }" 
+                          [nzData]="{'userName': userName}" 
+                          (nzChange)="handleUploadThumChange($event)" 
+                          nzAccept=".png,.jpg,.jpeg"
+                          >
+                <button nz-button >
+                  <i nz-icon nzType="upload"></i> Upload File
+                </button>
+              </nz-upload>
             </div>
-            <nz-modal [(nzVisible)]="isthumVisible" [nzTitle]="modalTitle" [nzContent]="modalContent"
+            <!-- <nz-modal [(nzVisible)]="isthumVisible" [nzTitle]="modalTitle" [nzContent]="modalContent"
               [nzFooter]="modalFooter" (nzOnCancel)="handleThumpCancel()">
               <ng-template #modalTitle>Select An Image</ng-template>
               <ng-template #modalContent>
@@ -434,7 +448,7 @@
                 <button nz-button nzType="default" (click)="handleThumpCancel()">Cancel</button>
                 <button nz-button nzType="primary" (click)="handleThumpOk()" [nzLoading]="isConfirmLoading">Submit</button>
               </ng-template>
-            </nz-modal>
+            </nz-modal> -->
           </nz-form-item>   <!-- <img [src]="fileUrl" style="width: auto; height: auto; max-width: 250px; max-height: 250px;" *ngIf="previewUrl && !isVideo  && templateForm.get('type')?.value === 'rich_card'" />
           <img [src]="thumbnailUrl" style="width: auto; height: auto; max-width: 250px; max-height: 250px;" *ngIf="thumbnailUrl && isVideo" /> -->
           <!-- Carousel Video Thumbnail Preview (show thumbnail for selected card in carousel) -->

@@ -565,6 +565,8 @@ export class AddComponent {
     }
     return true;
   }
+
+
   VideoHandleChange(event: NzUploadChangeParam): void {
     this.templateForm.patchValue({
       standAloneFileName: "",
@@ -2167,4 +2169,55 @@ export class AddComponent {
 
     return true; // Return true for valid file
   };
+
+  handleUploadChange(info: { file: any; fileList: any[] }){
+    if (info.file.status === 'done') {
+    // ✅ API response from backend
+    const response = info.file.response;
+    console.log('Upload success:', response);
+    this.toastService.publishNotification("success", "File uploaded successfully");
+      this.fileUrl = response.fileUploadLocation;
+          // Fetch the file from the URL and get its size, then show in toast
+          if (this.fileUrl) {
+            // Use the file size from the File object if available
+            if (this.file && this.file.size) {
+              const sizeKB = (this.file.size / 1024).toFixed(1);
+              this.uploadedFileSize = sizeKB;
+            }
+            this.templateForm.patchValue({ standAloneFileName: this.fileUrl });
+            if (this.templateForm.get("type")?.value == "carousel") {
+              this.carouselList[this.selectedCardIndex].mediaUrl = this.fileUrl;
+            }
+            this.selectedFile1 = null;
+          }
+    // If you need some property from response
+    // e.g. response.url or response.data
+    // this.uploadedFileData = response;
+  } else if (info.file.status === 'error') {
+    console.error('Upload failed:', info.file.error);
+  }
+  }
+
+  handleUploadThumChange(info: { file: any; fileList: any[] }){
+   if (info.file.status === 'done') {
+    // ✅ API response from backend
+    const response = info.file.response;
+    console.log('Upload success:', response);
+    this.toastService.publishNotification("success", "File uploaded successfully");
+     this.thumbnailFileName=response.fileUploadLocation.split('/')[3]
+       this.thumbnailUrl=response.fileUploadLocation
+    this.templateForm.patchValue({ standAloneFileName: this.thumbnailUrl });
+       this.toastService.publishNotification('success', 'Thumbnail uploaded successfully', 'success');
+
+       if(this.templateForm.get('type')?.value=='carousel'){
+          this.carouselList[this.selectedCardIndex].thumbnailUrl=this.thumbnailUrl
+         this.carouselList[this.selectedCardIndex].thumbnailFileName=this.thumbnailFileName
+     }
+    // If you need some property from response
+    // e.g. response.url or response.data
+    // this.uploadedFileData = response;
+  } else if (info.file.status === 'error') {
+    console.error('Upload failed:', info.file.error);
+  } 
+  }
 }

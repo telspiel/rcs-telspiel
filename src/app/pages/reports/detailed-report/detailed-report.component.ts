@@ -32,7 +32,7 @@ export class DetailedReportComponent {
   data:any
   status:any
   date: [Date, Date] = [new Date(), new Date()];
-
+  source: string = 'all';
   isLoading=false
   // Admin=""
 
@@ -205,6 +205,7 @@ handleSelection(event:any){
           "mobileNumber": this.mobileNumber,
           "botName": this.selectedBot,
           "campaignName":this.selectedCampaign,
+          "messageSource":this.source || undefined,
         }
         console.log("search payload"+JSON.stringify(this.dt))
         this.detailReport.getDetailReport(this.dt).subscribe(
