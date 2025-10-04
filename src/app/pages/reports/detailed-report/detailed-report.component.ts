@@ -205,7 +205,7 @@ handleSelection(event:any){
           "mobileNumber": this.mobileNumber,
           "botName": this.selectedBot,
           "campaignName":this.selectedCampaign,
-          "messageSource":this.source,
+          "messageSource":this.source || undefined,
         }
         console.log("search payload"+JSON.stringify(this.dt))
         this.detailReport.getDetailReport(this.dt).subscribe(
