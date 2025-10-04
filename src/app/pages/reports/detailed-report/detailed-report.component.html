@@ -62,6 +62,7 @@
               nzPlaceHolder="All"
               style="width: 100%"
               [(ngModel)]="source"
+              [ngModelOptions]="{ standalone: true }"
             >
               <nz-option nzLabel="All" nzValue=""></nz-option>
               <nz-option nzLabel="API" nzValue="api"></nz-option>

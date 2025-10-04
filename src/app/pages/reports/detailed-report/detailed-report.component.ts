@@ -32,7 +32,7 @@ export class DetailedReportComponent {
   data:any
   status:any
   date: [Date, Date] = [new Date(), new Date()];
-  source: string = '';
+  source: any;
   isLoading=false
   // Admin=""
 
@@ -192,7 +192,7 @@ handleSelection(event:any){
 
   getdata(){
     this.isLoading=true
-    
+    console.log(this.source)
         this.dt = {
           "loggedInUserName": sessionStorage.getItem('USER_NAME'),
           "resellerName": this.Reseller || null,
@@ -205,7 +205,7 @@ handleSelection(event:any){
           "mobileNumber": this.mobileNumber,
           "botName": this.selectedBot,
           "campaignName":this.selectedCampaign,
-          "messageSource":this.source || undefined,
+          "messageSource":this.source,
         }
         console.log("search payload"+JSON.stringify(this.dt))
         this.detailReport.getDetailReport(this.dt).subscribe(
