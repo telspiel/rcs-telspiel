@@ -417,65 +417,65 @@ export class CreditmanagmentComponent implements OnInit {
   }
 
   search() {
-    let adminName = "";
-    let clientName = "";
-    let resellerName = "";
-    let sellerName = "";
+    let adminName = this.selectedReseller?this.selectedReseller: "";
+    let clientName = this.selectedClient? this.selectedClient: "";
+    let resellerName = this.selectedReseller? this.selectedReseller: "";
+    let sellerName = this.selectedSeller? this.selectedSeller: "";
 
     // Determine label names for UI, fallback to ID for API
-    if (this.role === "admin" && this.Admin && this.Adminlist?.length) {
-      const admin = this.Adminlist.find((x) => x.value === this.Admin);
-      adminName = admin?.label || "";
-    }
+    // if (this.role === "admin" && this.Admin && this.Adminlist?.length) {
+    //   const admin = this.Adminlist.find((x) => x.value === this.Admin);
+    //   adminName = admin?.label || "";
+    // }
 
-    if (this.role === "client" && this.Client && this.Clientlist?.length) {
-      const client = this.Clientlist.find((x) => x.value === this.Client);
-      clientName = client?.label || "";
-    }
+    // if (this.role === "client" && this.Client && this.Clientlist?.length) {
+    //   const client = this.Clientlist.find((x) => x.value === this.Client);
+    //   clientName = client?.label || "";
+    // }
 
-    if (this.role === "reseller" && this.Reseller && this.ResllerList?.length) {
-      const reseller = this.ResllerList.find((x) => x.value === this.Reseller);
-      resellerName = reseller?.label || "";
-    }
+    // if (this.role === "reseller" && this.Reseller && this.ResllerList?.length) {
+    //   const reseller = this.ResllerList.find((x) => x.value === this.Reseller);
+    //   resellerName = reseller?.label || "";
+    // }
 
-    if (this.role === "seller" && this.Seller && this.SellerList?.length) {
-      const seller = this.SellerList.find((x) => x.value === this.Seller);
-      sellerName = seller?.label || "";
-    }
+    // if (this.role === "seller" && this.Seller && this.SellerList?.length) {
+    //   const seller = this.SellerList.find((x) => x.value === this.Seller);
+    //   sellerName = seller?.label || "";
+    // }
 
     const requestData: any = {
       loggedInUserName: sessionStorage.getItem("USER_NAME"),
       fromDate: `${format(new Date(this.date[0]), "yyyy-MM-dd")}`,
       toDate: `${format(new Date(this.date[1]), "yyyy-MM-dd")}`,
-      adminName,
-      clientName,
+     adminName,
+     sellerName,
+     clientName,
       resellerName,
-      sellerName,
       // pageNumber: this.pageIndex
     };
 
     // Send IDs to backend
-    if (this.Admin) requestData.adminName = this.Admin;
-    if (this.Client) requestData.clientName = this.Client;
-    if (this.Reseller) requestData.resellerName = this.Reseller;
-    if (this.Seller) requestData.sellerName = this.Seller;
-    if (
-      this.Admin === null &&
-      this.Client === null &&
-      this.Reseller === null &&
-      this.Seller === null
-    ) {
-      if (this.role === "client")
-        requestData.clientName = sessionStorage.getItem("USER_NAME");
-      if (this.role === "seller")
-        requestData.sellerName = sessionStorage.getItem("USER_NAME");
-      if (this.role === "reseller")
-        requestData.resellerName = sessionStorage.getItem("USER_NAME");
-      if (this.role === "admin")
-        requestData.adminName = sessionStorage.getItem("USER_NAME");
-      if (this.role === "superadmin")
-        requestData.adminName = sessionStorage.getItem("USER_NAME");
-    }
+    // if (this.Admin) requestData.adminName = this.Admin;
+    // if (this.Client) requestData.clientName = this.Client;
+    // if (this.Reseller) requestData.resellerName = this.Reseller;
+    // if (this.Seller) requestData.sellerName = this.Seller;
+    // if (
+    //   this.Admin === null &&
+    //   this.Client === null &&
+    //   this.Reseller === null &&
+    //   this.Seller === null
+    // ) {
+    //   if (this.role === "client")
+    //     requestData.clientName = sessionStorage.getItem("USER_NAME");
+    //   if (this.role === "seller")
+    //     requestData.sellerName = sessionStorage.getItem("USER_NAME");
+    //   if (this.role === "reseller")
+    //     requestData.resellerName = sessionStorage.getItem("USER_NAME");
+    //   if (this.role === "admin")
+    //     requestData.adminName = sessionStorage.getItem("USER_NAME");
+    //   if (this.role === "superadmin")
+    //     requestData.adminName = sessionStorage.getItem("USER_NAME");
+    // }
 
     console.log("API Request:", requestData);
 
