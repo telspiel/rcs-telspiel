@@ -59,44 +59,11 @@
         "
       >
         <!-- Credits and Last Login Info -->
-         <div
+        <div
           *ngIf="role !== 'agent'"
-          style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: end"
+          style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center"
         >
-
-          <span *ngIf="role !== 'accountManager'">
-            Block Rich Credit:
-            <span >{{ availableRichBlockCredit }}</span>
-            <button
-              nz-button
-              nzType="link"
-              nzShape="circle"
-              nz-tooltip
-              nzTooltipTitle="Refresh"
-              (click)="blockRichcredit()"
-            >
-              <i nz-icon nzType="redo" nzTheme="outline"></i>
-            </button>
-          </span>
-
-
-            <span *ngIf="role !== 'accountManager'">
-            Block Text Credit:
-            <span>{{ availableTextBlockCredit }}</span>
-            <button
-              nz-button
-              nzType="link"
-              nzShape="circle"
-              nz-tooltip
-              nzTooltipTitle="Refresh"
-              (click)="blockTextcredit()"
-            >
-              <i nz-icon nzType="redo" nzTheme="outline"></i>
-            </button>
-          </span> 
-
-          
-          <span *ngIf="role !== 'accountManager'">
+          <span>
             Available Rich Credit:
             <span style="margin-left: 4px">{{ availableRichCredit }}</span>
             <button
@@ -111,7 +78,7 @@
             </button>
           </span>
 
-          <span *ngIf="role !== 'accountManager'">
+          <span>
             Available Text Credit:
             <span style="margin-left: 4px">{{ availableTextCredit }}</span>
             <button
@@ -126,7 +93,7 @@
             </button>
           </span>
 
-          <span *ngIf="role !== 'accountManager'">
+          <span>
             Available Wallet Balance:
             <span style="margin-left: 4px">{{ userAvailableBalance }}</span>
             <button

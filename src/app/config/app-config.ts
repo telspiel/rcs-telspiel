@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-export const loadAppConfig = (): Promise<void> => {
+export const loadAppConfig = (): Promise<void> => { 
     return new Promise((resolve) => {
       if (window.appConfig?.BASE_URL) {
         BASE_URL = window.appConfig.BASE_URL;

@@ -26,12 +26,12 @@
           </div>
         
           <!-- Carriers -->
-          <div nz-col [nzSpan]="4" class="filter-item">
+          <!-- <div nz-col [nzSpan]="4" class="filter-item">
             <label for="carriers" class="ant-form-item-label">Carriers</label>
             <nz-select nzPlaceHolder="All Carriers" style="width: 100%;">
               <nz-option nzLabel="All Carriers" nzValue="all"></nz-option>
             </nz-select>
-          </div>
+          </div> -->
 
            <!-- <div nz-col [nzSpan]="4" class="filter-item">
             <label for="brands" class="ant-form-item-label">Brands</label>
@@ -75,192 +75,161 @@
       </nz-card>
 
      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-  <h2>Summary</h2>
-<button style="border-radius: 30px;" nz-button nzType="default" class="px-4 py-2" (click)="downloadCSV()">
-      Download Summary
-      <i nz-icon nzType="download"></i>
-    </button>
-</div>
+      <h2>Summary</h2>
 
+      <div class="dashboard-btns">
+        <button style="border-radius: 30px;" nz-button nzType="default" class="px-4 py-2" [ngClass]="{ 'active-btn': isGraphVisible }" (click)="showGraph()">
+          Visual Insights
+        </button>
       
-
-      <div nz-row [nzGutter]="24" class="dashboard-stats">
-        <div nz-col [nzSpan]="4">
-          <nz-card nzHoverable nzTitle="Basic Message">
-            <div class="stat-value">
-              {{totalBasicMessages || "-"}}
-              <i nz-icon nzType="message" style="color: #1890ff;"></i>
-            </div>
-            <div class="stat-detail"></div>
-          </nz-card>
-        </div>
-
-        <div nz-col [nzSpan]="4">
-          <nz-card nzHoverable nzTitle="A2P Single Message">
-            <div class="stat-value">
-              {{ totalA2PSingleMessages || "-"}}
-              <i nz-icon nzType="mail" style="color: #13c2c2;"></i>
-            </div>
-            <div class="stat-detail"></div>
-          </nz-card>
-        </div>
-
-        <div nz-col [nzSpan]="4">
-          <nz-card nzHoverable nzTitle="A2P Conversation">
-            <div class="stat-value">
-              {{ totalA2PConversation || "-"}}
-              <i nz-icon nzType="comment" style="color: #faad14;"></i>
-            </div>
-            <div class="stat-detail"></div>
-          </nz-card>
-        </div>
-
-        <div nz-col [nzSpan]="4">
-          <nz-card nzHoverable nzTitle="P2A Conversation">
-            <div class="stat-value">
-              {{ totalP2AConversation || "-"}}
-              <i nz-icon nzType="message"></i>
-            </div>
-            <div class="stat-detail"></div>
-          </nz-card>
-        </div>
-
-
-        <div nz-col [nzSpan]="4">
-          <nz-card nzHoverable nzTitle="Rich OTP">
-            <div class="stat-value">
-              {{totalRichOTP || "-"}}
-              <i nz-icon nzType="key" style="color: #722ed1;"></i>
-            </div>
-            <div class="stat-detail">
-
-            </div>
-          </nz-card>
-        </div>
-
-        <div nz-col [nzSpan]="4">
-          <nz-card nzHoverable nzTitle="Rich SMS">
-            <div class="stat-value">
-              {{totalRichSms || "-"}}
-              <i nz-icon nzType="notification" style="color: #eb2f96;"></i>
-            </div>
-              <div class="stat-detail">
-
-            </div>
-          </nz-card>
-        </div>
+        <button style="border-radius: 30px;" nz-button nzType="default" class="px-4 py-2"  [ngClass]="{ 'active-btn': isDashboardVisible }" (click)="showDashboard()">
+          Key Metrics
+        </button>
+      
+        <button style="border-radius: 30px;" nz-button nzType="default" class="px-4 py-2" [ngClass]="{ 'active-btn': isDashboardTableVisible }"
+        (click)="showDashboardTable()">
+          Data Table
+        </button>
       </div>
 
-      <!-- <div nz-row [nzGutter]="24" class="dashboard-stats">
-        <div nz-col [nzSpan]="8">
-          <nz-card nzHoverable nzTitle="Basic Message">
-            <div class="stat-value">
-              <span>Basic</span>
-              <i nz-icon nzType="message" style="color: #1890ff;"></i>
-            </div>
-            <div class="stat-detail">{{ totalBasicMessages }}</div>
-          </nz-card>
-        </div>
-      
-        <div nz-col [nzSpan]="8">
-          <nz-card nzHoverable nzTitle="A2P Single Message">
-            <div class="stat-value">
-              <span>Single</span>
-              <i nz-icon nzType="mail" style="color: #13c2c2;"></i>
-            </div>
-            <div class="stat-detail">{{ totalA2PSingleMessages }}</div>
-          </nz-card>
-        </div>
-      
-        <div nz-col [nzSpan]="8">
-          <nz-card nzHoverable nzTitle="A2P Conversation">
-            <div class="stat-value">
-              <span>A2P</span>
-              <i nz-icon nzType="comment" style="color: #faad14;"></i>
-            </div>
-            <div class="stat-detail">{{ totalA2PConversation }}</div>
-          </nz-card>
-        </div>
-      
-        <div nz-col [nzSpan]="8">
-          <nz-card nzHoverable nzTitle="P2A Conversation">
-            <div class="stat-value">
-              <span>P2A</span>
-              <i nz-icon nzType="message"></i>
-            </div>
-            <div class="stat-detail">{{ totalP2AConversation }}</div>
-          </nz-card>
-        </div>
-      
-        <div nz-col [nzSpan]="8">
-          <nz-card nzHoverable nzTitle="Rich OTP">
-            <div class="stat-value">
-              <span>OTP</span>
-              <i nz-icon nzType="key" style="color: #722ed1;"></i>
-            </div>
-            <div class="stat-detail">{{ totalRichOTP }}</div>
-          </nz-card>
-        </div>
-      
-        <div nz-col [nzSpan]="8">
-          <nz-card nzHoverable nzTitle="Rich SMS">
-            <div class="stat-value">
-              <span>SMS</span>
-              <i nz-icon nzType="notification" style="color: #eb2f96;"></i>
-            </div>
-            <div class="stat-detail">{{ totalRichSms }}</div>
-          </nz-card>
-        </div>
-      </div> -->
+    <button style="border-radius: 30px;" nz-button nzType="default" class="px-4 py-2" (click)="downloadCSV()">
+          Download Summary
+          <i nz-icon nzType="download"></i>
+        </button>
+    </div>
+
       
 
+        <div *ngIf="isDashboardVisible" nz-row [nzGutter]="24" class="dashboard-stats">
+          <div nz-col [nzSpan]="8">
+            <nz-card nzHoverable nzTitle="Basic Message">
+              <div class="stat-value">
+                {{totalBasicMessages || "-"}}
+                <i nz-icon nzType="message" style="color: #1890ff;"></i>
+              </div>
+            </nz-card>
+          </div>
 
-      <nz-table #basicTable [nzBordered]="true" [nzSize]="'middle'" [nzData]="tableData" [nzPageSize]="5"
-        [nzShowPagination]="true" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" [nzTotal]="totalRecords" [nzLoading]="loading">
-        <thead>
-          <tr>
-            <th nzWidth="10%" *ngIf="selectedOption === 'bot'">Bot</th>
-           <th nzWidth="10%" *ngIf="selectedOption === 'brand'">Brand Name</th>
-           <th nzWidth="10%" *ngIf="selectedOption === 'template'">Template</th>
-           <th nzWidth="10%" *ngIf="selectedOption === 'campaign'">Campaign</th>
+          <div nz-col [nzSpan]="8">
+            <nz-card nzHoverable nzTitle="Rich SMS">
+              <div class="stat-value">
+                {{totalRichSms || "-"}}
+                <i nz-icon nzType="notification" style="color: #eb2f96;"></i>
+              </div>
+            </nz-card>
+          </div>
+        
+          <div nz-col [nzSpan]="8">
+            <nz-card nzHoverable nzTitle="A2P Single Message">
+              <div class="stat-value">
+                {{ totalA2PSingleMessages || "-"}}
+                <i nz-icon nzType="mail" style="color: #13c2c2;"></i>
+              </div>
+            </nz-card>
+          </div>
+        
+          <div nz-col [nzSpan]="8">
+            <nz-card nzHoverable nzTitle="A2P Conversation">
+              <div class="stat-value">
+                {{ totalA2PConversation || "-"}}
+                <i nz-icon nzType="comment" style="color: #faad14;"></i>
+              </div>
+            </nz-card>
+          </div>
+        
+          <div nz-col [nzSpan]="8">
+            <nz-card nzHoverable nzTitle="P2A Conversation">
+              <div class="stat-value">
+                {{ totalP2AConversation || "-"}}
+                <i nz-icon nzType="message"></i>
+              </div>
+            </nz-card>
+          </div>
+        
+          <div nz-col [nzSpan]="8">
+            <nz-card nzHoverable nzTitle="Rich OTP">
+              <div class="stat-value">
+                {{totalRichOTP || "-"}}
+                <i nz-icon nzType="key" style="color: #722ed1;"></i>
+              </div>
+            </nz-card>
+          </div>
+        
+        </div>
+        
 
-            <th nzWidth="10%">Date</th>
-            <th nzWidth="10%">Basic Message</th>
-            <th nzWidth="12%">A2P Single Message</th>
-            <th nzWidth="12%">A2P Conversation</th>
-            <th nzWidth="12%">P2A Conversation</th>
-            <th nzWidth="10%">Rich OTP</th>
-            <th nzWidth="10%">Rich SMS</th>
-            <th nzWidth="10%">Awaited</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let dt of basicTable.data">
-                        <td *ngIf="selectedOption=== 'brand'">{{dt.brandName}}</td>
-            <td *ngIf="selectedOption=== 'bot'">{{dt.botName}}</td>
-               <td *ngIf="selectedOption=== 'template'">{{dt.templateName}}</td>
-                 <td *ngIf="selectedOption=== 'campaign'">{{dt.campaignName}}</td>
-            <td>{{ dt.summaryDate | date: 'dd-MM-yyyy' }}</td>
-            <td>{{dt.totalBasicMessages}}</td>
-            <td>{{dt.totalA2PSingleMessages}}</td>
-            <td>{{dt.totalA2PConversation}}</td>
-            <td>{{dt.totalP2AConversation}}</td>
-            <td>{{dt.totalRichOTP}}</td>
-            <td>{{dt.totalRichSMS}}</td>
-          <td>
-  {{
-    ((dt.totalSubmitted || 0) - ((dt.operatorTotalSubmitted || 0) + (dt.totalFailed || 0)) > 0)
-      ? ((dt.totalSubmitted || 0) - ((dt.operatorTotalSubmitted || 0) + (dt.totalFailed || 0)))
-      : 0
-  }}
-</td>
+      <!-- Graph -->
+      <div *ngIf="isGraphVisible" style="width: 100%; max-width: 800px; margin: auto;">
+        <canvas id="summaryBarChart"></canvas>
+      </div>
+      
+      
+      <nz-table
+  *ngIf="isDashboardTableVisible"
+  #basicTable
+  [nzBordered]="true"
+  [nzSize]="'middle'"
+  [nzData]="tableData"
+  [nzPageSize]="5"
+  [nzShowPagination]="true"
+  [nzPageSize]="pageSize"
+  [nzPageIndex]="pageIndex"
+  [nzTotal]="totalRecords"
+  [nzLoading]="loading"
+>
+  <thead>
+    <tr>
+      <th nzWidth="10%" *ngIf="selectedOption === 'bot'">Bot</th>
+      <th nzWidth="10%" *ngIf="selectedOption === 'brand'">Brand Name</th>
+      <th nzWidth="10%" *ngIf="selectedOption === 'template'">Template</th>
+      <th nzWidth="10%" *ngIf="selectedOption === 'campaign'">Campaign</th>
 
+      <!-- ✅ Username column added here -->
+      <th nzWidth="10%">Username</th>
 
+      <th nzWidth="10%">Date</th>
+      <th nzWidth="10%">Basic Message</th>
+      <th nzWidth="12%">A2P Single Message</th>
+      <th nzWidth="10%">A2P Conversation</th>
+      <th nzWidth="10%">P2A Conversation</th>
+      <th nzWidth="10%">Rich OTP</th>
+      <th nzWidth="10%">Rich SMS</th>
+      <th nzWidth="10%">Awaited</th>
+    </tr>
+  </thead>
 
+  <tbody>
+    <tr *ngFor="let dt of basicTable.data">
+      <td *ngIf="selectedOption === 'bot'">{{ dt.botName }}</td>
+      <td *ngIf="selectedOption === 'brand'">{{ dt.brandName }}</td>
+      <td *ngIf="selectedOption === 'template'">{{ dt.templateName }}</td>
+      <td *ngIf="selectedOption === 'campaign'">{{ dt.campaignName }}</td>
 
-          </tr>
-        </tbody>
-      </nz-table>
+      <!-- ✅ Username cell -->
+      <td>{{ dt.userName || '-' }}</td>
+
+      <td>{{ dt.summaryDate | date: 'dd-MM-yyyy' }}</td>
+      <td>{{ dt.totalBasicMessages || 0 }}</td>
+      <td>{{ dt.totalA2PSingleMessages || 0 }}</td>
+      <td>{{ dt.totalA2PConversation || 0 }}</td>
+      <td>{{ dt.totalP2AConversation || 0 }}</td>
+      <td>{{ dt.totalRichOTP || 0 }}</td>
+      <td>{{ dt.totalRichSMS || 0 }}</td>
+
+      <td>
+        {{
+          ((dt.totalSubmitted || 0) -
+            ((dt.operatorTotalSubmitted || 0) + (dt.totalFailed || 0)) >
+          0
+            ? (dt.totalSubmitted || 0) -
+              ((dt.operatorTotalSubmitted || 0) + (dt.totalFailed || 0))
+            : 0)
+        }}
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+
     </nz-tab>
 
 
@@ -288,13 +257,15 @@
               <nz-option nzLabel="India" nzValue="india"></nz-option>
             </nz-select>
           </div>
+
           <!-- Carriers -->
-          <div nz-col [nzSpan]="4" class="filter-item">
+          <!-- <div nz-col [nzSpan]="4" class="filter-item">
             <label for="carriers" class="ant-form-item-label">Carriers</label>
             <nz-select nzPlaceHolder="All Carriers" style="width: 100%;">
               <nz-option nzLabel="All Carriers" nzValue="all"></nz-option>
             </nz-select>
-          </div>
+          </div> -->
+
           <!-- Brands -->
           <div nz-col [nzSpan]="4" class="filter-item">
             <label for="bots" class="ant-form-item-label">Bots</label>
@@ -352,153 +323,132 @@
       </div>
       </nz-card>
 
-      <nz-table #tableData2 [nzData]="tableData" [nzBordered]="true" [nzSize]="'middle'"
-        [nzScroll]="{ x: '2400px' }" [nzPageSize]="5" [nzShowPagination]="true" [nzPageSize]="pageSize"
-        [nzPageIndex]="pageIndex" [nzTotal]="totalRecords" [nzLoading]="loading">
-        <thead>
-            <tr>
-            <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'bot'">Bot</th>
-            <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'brand'">Brand Name</th>
-            <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'template'">Template Name</th>
-            <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'campaign'">Campaigns Name</th>
-
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesSubmitted">
-              <span style="display: flex; align-items: center; gap:8px;">Summary&nbsp;Date
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The total number of messages requested."></i>
-              </span>
-            </th>
-            
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesSubmitted">
-              <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Submitted
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The total number of messages Submitted"></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesDelivered">
-              <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Delivered
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The total number of messages for which a delivery report was received."></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesRead">
-              <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Read
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The total number of messages that were read."></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesFailed">
-              <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Failed
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The total number of messages that failed to send."></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnRevokedExpired">
-              <span style="display: flex; align-items: center; gap:8px;">Revoked/Expired
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The total number of messages that were revoked or expired."></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnDeliveryRate">
-              <span style="display: flex; align-items: center; gap:8px;">Delivery&nbsp;Rate
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The delivery rate is defined as (Number of messages delivered / Number of messages sent) × 100."></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnReadRate">
-              <span style="display: flex; align-items: center; gap:8px;">Read&nbsp;Rate
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The read rate is defined as (Number of messages read / Number of messages sent) × 100."></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnP2AResponses">
-              <span style="display: flex; align-items: center; gap:8px;">P2A&nbsp;Responses
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The response received from users upon clicking the button."></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnP2AResponseRate">
-              <span style="display: flex; align-items: center; gap:8px;">P2A&nbsp;Response&nbsp;Rate
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="The P2A response rate is defined as (Number of P2A responses / Number of messages read) × 100."></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnP2AMessages">
-              <span style="display: flex; align-items: center; gap:8px;">P2A&nbsp;Messages
-              <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-                nzTooltipTitle="Text messages received from users."></i>
-              </span>
-            </th>
-            <th nzAlign="center" nzWidth="37%" [nzSortFn]="sortFnP2Awaited">
-          <span style="display: flex; align-items: center; gap:8px;">Awaited
-    <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-      nzTooltipTitle="Text messages received from users."></i>
-  </span>
-</th>
-   <!-- <th nzAlign="center" nzWidth="37%" [nzSortFn]="sortFnP2operator">
-          <span style="display: flex; align-items: center; gap:8px;">operator
-    <i nz-icon style="color: #ff0909;" nzType="info-circle" class="info-icon" nz-tooltip
-      nzTooltipTitle="Text messages received from users."></i>
-  </span>
-</th> -->
-
-            </tr>
-
-        
-          <tr>
-            <th nzAlign="center">Total</th>
-            <th nzAlign="center"></th>
-            <th nzAlign="center">{{totalRequest}}</th>
-            <!-- <th nzAlign="center">{{totalQueued}}</th> -->
-          
-            <th nzAlign="center">{{totalSubmitted}}</th>
-            <th nzAlign="center">{{totalDelivered}}</th>
-            <th nzAlign="center">{{totalRead}}</th>
-            <th nzAlign="center">{{totalFailed}}</th>
-            <th nzAlign="center">{{totalExpired}}</th>
-            <th nzAlign="center">{{deliveryRate}}</th>
-            <th nzAlign="center">{{readRate}}</th>
-            <th nzAlign="center">{{totalP2AResponses}}</th>
-            <th nzAlign="center">{{p2AResponseRate}}</th>
-            <th nzAlign="center">{{totalP2AMessages}}</th>
-            <th nzAlign="center">{{ getDLRAwaited() }}</th>
-            <!-- <th nzAlign="center">{{operatorTotalSubmitted}}</th> -->
+      <nz-table
+      #tableData2
+      [nzData]="tableData"
+      [nzBordered]="true"
+      [nzSize]="'middle'"
+      [nzScroll]="{ x: '2400px' }"
+      [nzPageSize]="5"
+      [nzShowPagination]="true"
+      [nzPageSize]="pageSize"
+      [nzPageIndex]="pageIndex"
+      [nzTotal]="totalRecords"
+      [nzLoading]="loading"
+    >
+      <thead>
+        <tr>
+          <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'bot'">Bot</th>
+          <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'brand'">Brand Name</th>
+          <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'template'">Template Name</th>
+          <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'campaign'">Campaigns Name</th>
+    
+          <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnUserName">
+            <span style="display: flex; align-items: center; gap:8px;">User&nbsp;Name
+              <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
+                nzTooltipTitle="The user name from response."></i>
+            </span>
+          </th>
+    
+          <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnDateTime">
+            <span style="display: flex; align-items: center; gap:8px;">Summary&nbsp;Date
+              <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
+                nzTooltipTitle="The summary date from response."></i>
+            </span>
+          </th>
+    
+          <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesSubmitted">
+            <span style="display: flex; align-items: center; gap:8px;">Total&nbsp;Request
+              <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
+                nzTooltipTitle="The total number of requests."></i>
+            </span>
+          </th>
+    
+          <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnP2operator">
+            <span style="display: flex; align-items: center; gap:8px;">Message&nbsp;Submitted
+              <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
+                nzTooltipTitle="The total number of messages submitted."></i>
+            </span>
+          </th>
+    
+          <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesDelivered">
+            <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Delivered
+              <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
+                nzTooltipTitle="Messages for which a delivery report was received."></i>
+            </span>
+          </th>
+    
+          <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesRead">
+            <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Read
+              <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
+                nzTooltipTitle="Total number of messages that were read."></i>
+            </span>
+          </th>
+    
+          <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesFailed">
+            <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Failed
+              <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
+                nzTooltipTitle="Messages that failed to send."></i>
+            </span>
+          </th>
+    
+          <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnRevokedExpired">
+            <span style="display: flex; align-items: center; gap:8px;">Revoked/Expired
+              <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
+                nzTooltipTitle="Messages that were revoked or expired."></i>
+            </span>
+          </th>
+    
+          <th nzAlign="center" nzWidth="37%" [nzSortFn]="sortFnP2Awaited">
+            <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Awaited
+              <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
+                nzTooltipTitle="Messages still awaited."></i>
+            </span>
+          </th>
+        </tr>
+    
+        <tr>
+          <th nzAlign="center">Total</th>
+          <th nzAlign="center"></th>
+          <th nzAlign="center"></th>
+          <th nzAlign="center">{{ totalRequest }}</th>
+          <th nzAlign="center">{{ operatorTotalSubmitted }}</th>
+          <th nzAlign="center">{{ totalDelivered }}</th>
+          <th nzAlign="center">{{ totalRead }}</th>
+          <th nzAlign="center">{{ totalFailed }}</th>
+          <th nzAlign="center">{{ totalExpired }}</th>
+          <th nzAlign="center">{{ getDLRAwaited() }}</th>
+        </tr>
+      </thead>
+    
+      <tbody>
+        <ng-container>
+          <tr *ngFor="let item of tableData2.data">
+            <td nzAlign="center" *ngIf="selectedOption == 'bot'">{{ item.botName }}</td>
+            <td nzAlign="center" *ngIf="selectedOption == 'brand'">{{ item.brandName }}</td>
+            <td nzAlign="center" *ngIf="selectedOption == 'template'">{{ item.templateName }}</td>
+            <td nzAlign="center" *ngIf="selectedOption == 'campaign'">{{ item.campaignName }}</td>
+    
+            <td nzAlign="center">{{ item.userName || '-' }}</td>
+            <td nzAlign="center">{{ item.summaryDate || '0' }}</td>
+            <td nzAlign="center">{{ item.totalRequest || '0' }}</td>
+            <td nzAlign="center">{{ item.operatorTotalSubmitted || '0' }}</td>
+            <td nzAlign="center">{{ item.totalDelivered || '0' }}</td>
+            <td nzAlign="center">{{ item.totalRead || '0' }}</td>
+            <td nzAlign="center">{{ item.totalFailed || '0' }}</td>
+            <td nzAlign="center">{{ item.totalExpired || '0' }}</td>
+            <td nzAlign="center">
+              {{
+                ((item.totalSubmitted || 0) - ((item.operatorTotalSubmitted || 0) + (item.totalFailed || 0)) > 0)
+                  ? ((item.totalSubmitted || 0) - ((item.operatorTotalSubmitted || 0) + (item.totalFailed || 0)))
+                  : 0
+              }}
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <ng-container>
-            <tr *ngFor="let item of tableData2.data">
-
-              <td nzAlign="center" *ngIf="selectedOption== 'bot'" nzEllipsis>{{item.botName}}</td>
-              <td nzAlign="center" *ngIf="selectedOption== 'brand'" nzEllipsis>{{item.brandName}}</td>
-              <td nzAlign="center" *ngIf="selectedOption== 'template'" nzEllipsis>{{item.templateName}}</td>
-              <td nzAlign="center" *ngIf="selectedOption== 'campaign'" nzEllipsis>{{item.campaignName}}</td>
-
-              <td nzAlign="center">{{ item.summaryDate || '0' }}</td>
-
-              <td nzAlign="center">{{ item.totalRequest || '0' }}</td>
-              <!-- <td nzAlign="center">{{ item.countQueued || '0' }}</td> -->
-              <td nzAlign="center">{{ item.totalSubmitted || '0' }}</td>
-              <!-- <td nzAlign="center">{{ 'N/A' }}</td> -->
-              <td nzAlign="center">{{ item.totalDelivered || '0' }}</td>
-              <td nzAlign="center">{{ item.totalRead || '0' }}</td>
-              <td nzAlign="center">{{ item.totalFailed || '0' }}</td>
-              <td nzAlign="center">{{ item.totalExpired || '0' }}</td>
-              <td nzAlign="center">{{ item.deliveryRate || '0' }}</td>
-              <td nzAlign="center">{{ item.readRate || '0' }}</td>
-              <td nzAlign="center">{{ item.totalP2AResponses || '0' }}</td>
-              <td nzAlign="center">{{ item.p2AResponseRate || '0' }}</td>
-              <td nzAlign="center">{{ item.totalP2AMessages || '0' }}</td>
-               <td nzAlign="center"> {{
-    ((item.totalSubmitted || 0) - ((item.operatorTotalSubmitted || 0) + (item.totalFailed || 0)) > 0)
-      ? ((item.totalSubmitted || 0) - ((item.operatorTotalSubmitted || 0) + (item.totalFailed || 0)))
-      : 0
-  }}</td>
-   <!-- <td nzAlign="center">{{ item.operatorTotalSubmitted || '0' }}</td> -->
-            </tr>
-          </ng-container>
-        </tbody>
-      </nz-table>
+        </ng-container>
+      </tbody>
+    </nz-table>
+    
 
       <ng-template #emptyState>
         <tr>

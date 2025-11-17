@@ -49,9 +49,16 @@ $final-color: #{$theme-color}#{$alpha};
     padding: 0;
     position: sticky;
     top: 0;
-    //width: 100%;
     z-index: 999;
-  }
+    overflow-y: auto;
+    max-height: 300px;
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* IE and Edge */
+    }
+    
+    ::-webkit-scrollbar {
+      display: none;                /* Chrome, Safari, Opera */
+    }
 
   ::ng-deep .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
     background-color: var(--theme-color-rbga) !important;

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { DashboardStats, MessageHistory } from 'src/app/models/dashboard-count';
 import { MessageContent, SendMessageHistory } from 'src/app/models/send-message-hook';
@@ -10,7 +10,6 @@ import { BrandService } from 'src/app/service/brand.service';
 import { TemplateService } from 'src/app/service/template-service.service';
 import { CampaignService } from 'src/app/service/campaign.service';
 import { BASE_URL } from 'src/app/config/app-config';
-import { Chart, registerables } from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,7 +17,7 @@ import { Chart, registerables } from 'chart.js';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
- 
+  
   role: string =sessionStorage.getItem('ROLE')||"";
 
   selectedOption: string = 'brand'; 
@@ -117,9 +116,6 @@ export class DashboardComponent {
       console.log('Selected Template:', this.selectedTemplate);
     }
   ngOnInit() {
-
-    this.onSearchClick();
-     this.isGraphVisible = true;
     
     const fromDate = this.date[0]
     const toDate = this.date[1];
@@ -418,7 +414,6 @@ Downloadtraffic(): void {
   onListByChange() {
     this.onSearchClick()
   }
-
   onSearchClick() {
     this.loading = true;
     let dt = {
@@ -460,13 +455,9 @@ Downloadtraffic(): void {
       this.totalRichOTP = this.sumMetric('totalRichOTP');
       this.operatorfailed = this.sumMetric('operatorfailed')
 
-      if (this.isGraphVisible) {
-        setTimeout(() => this.initChart(), 0);
-      } 
 
-    }); 
+    });
   }
-
   private sumMetric(metricName: string): number {
     return this.tableData?.reduce((sum, item) => sum + (Number(item[metricName]) || 0), 0) || 0;
   }
@@ -486,8 +477,7 @@ Downloadtraffic(): void {
     return `${day}-${month}-${year}`;
   }
 sortFnDateTime = (a: any, b: any) => new Date(a.id.date).getTime() - new Date(b.id.date).getTime();
-sortFnMessagesSubmitted = (a: any, b: any) => (a.userName || 0) - (b.userName || 0);
-sortFnUserName = (a: any, b: any) => (a.totalSubmitted || 0) - (b.totalSubmitted || 0);
+sortFnMessagesSubmitted = (a: any, b: any) => (a.totalSubmitted || 0) - (b.totalSubmitted || 0);
 sortFnMessagesDelivered = (a: any, b: any) => (a.totalDelivered || 0) - (b.totalDelivered || 0);
 sortFnMessagesRead = (a: any, b: any) => (a.totalRead || 0) - (b.totalRead || 0);
 sortFnMessagesFailed = (a: any, b: any) => (a.totalFailed || 0) - (b.totalFailed || 0);
@@ -527,97 +517,6 @@ getDLRAwaited(): number {
   return awaited > 0 ? awaited : 0;
 }
 
-// =============================================================================================
-
-isGraphVisible = true;
-isDashboardVisible = false;
-isDashboardTableVisible = false;
- 
-
-chart: any;
-
-ngAfterViewInit() {
-  this.initChart();
-}
-
-showGraph() {
-  this.isGraphVisible = true;
-  this.isDashboardVisible = false;
-  this.isDashboardTableVisible = false;
-  setTimeout(() => {
-    this.initChart(); 
-  }, 0);
-}
-
-showDashboard() {
-  this.isGraphVisible = false;
-  this.isDashboardVisible = true;
-  this.isDashboardTableVisible = false;
-}
-
-showDashboardTable() {
-  this.isGraphVisible = false;
-  this.isDashboardVisible = false;
-  this.isDashboardTableVisible = true;
-}
-
-initChart() {
-  const ctx: any = document.getElementById('summaryBarChart');
-  if (!ctx) return;
-
-  if (this.chart) this.chart.destroy();
-
-  this.chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: [
-        'Basic Message',
-        'Rich SMS',
-        'A2P Single Message',
-        'A2P Conversation',
-        'P2A Conversation',
-        'Rich OTP',
-      ],
-      datasets: [
-        {
-          label: 'Count',
-          data: [
-            this.totalBasicMessages,
-            this.totalRichSms,
-            this.totalA2PSingleMessages,
-            this.totalA2PConversation,
-            this.totalP2AConversation,
-            this.totalRichOTP,
-          ],
-          backgroundColor: [
-            '#13c2c2',
-            '#1890ff',
-            '#52c41a',
-            '#faad14',
-            '#eb2f96',
-            '#722ed1',
-          ]
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {
-          display: false
-        }
-      },
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
-}
-
-
-// ==============================================================================================
 
 
 

@@ -37,9 +37,10 @@
     >
       <thead> 
         <tr>
-          <th nzWidth="20%">Bot Name</th>
-          <th nzWidth="15%">Bot Type</th>
-          <th nzWidth="20%">Brand</th>
+          <th nzWidth="15%">User Name</th>
+          <th nzWidth="15%">Bot Name</th>
+          <th nzWidth="10%">Bot Type</th>
+          <th nzWidth="15%">Brand</th>
           <th nzWidth="20%">Status</th>
           <th *ngIf="role !== 'client' && role !== 'seller' && role !== 'reseller'" nzWidth="15%" >Operator Name</th>
           <th *ngIf="role==='admin' || role==='seller' || role==='reseller' || role==='client'" nzWidth="10%">Actions</th>
@@ -47,6 +48,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let bot of filteredData">
+          <td></td>
           <td>{{ bot.botName }}</td>
           <td>{{ bot.botType }}</td>
           <td>{{ bot.brandName }}</td>
