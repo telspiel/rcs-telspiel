@@ -185,7 +185,7 @@
       <th nzWidth="10%" *ngIf="selectedOption === 'campaign'">Campaign</th>
 
       <!-- ✅ Username column added here -->
-      <th nzWidth="10%">Username</th>
+      <th *ngIf="role==='admin'|| role ==='reseller'" nzWidth="10%">Username</th>
 
       <th nzWidth="10%">Date</th>
       <th nzWidth="10%">Basic Message</th>
@@ -206,7 +206,7 @@
       <td *ngIf="selectedOption === 'campaign'">{{ dt.campaignName }}</td>
 
       <!-- ✅ Username cell -->
-      <td>{{ dt.userName || '-' }}</td>
+      <td *ngIf="role==='admin'|| role ==='reseller'">{{ dt.userName || '-' }}</td>
 
       <td>{{ dt.summaryDate | date: 'dd-MM-yyyy' }}</td>
       <td>{{ dt.totalBasicMessages || 0 }}</td>
@@ -343,64 +343,64 @@
           <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'template'">Template Name</th>
           <th nzAlign="center" nzWidth="50%" *ngIf="selectedOption === 'campaign'">Campaigns Name</th>
     
-          <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnUserName">
-            <span style="display: flex; align-items: center; gap:8px;">User&nbsp;Name
+          <th *ngIf="role==='admin'|| role ==='reseller'" nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnUserName">
+            <span style="gap:8px;">User&nbsp;Name
               <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
                 nzTooltipTitle="The user name from response."></i>
             </span>
           </th>
     
           <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnDateTime">
-            <span style="display: flex; align-items: center; gap:8px;">Summary&nbsp;Date
+            <span style="gap:8px;">Summary&nbsp;Date
               <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
                 nzTooltipTitle="The summary date from response."></i>
             </span>
           </th>
     
           <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesSubmitted">
-            <span style="display: flex; align-items: center; gap:8px;">Total&nbsp;Request
+            <span style="gap:8px;">Total&nbsp;Request
               <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
                 nzTooltipTitle="The total number of requests."></i>
             </span>
           </th>
     
           <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnP2operator">
-            <span style="display: flex; align-items: center; gap:8px;">Message&nbsp;Submitted
+            <span style="gap:8px;">Message&nbsp;Submitted
               <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
                 nzTooltipTitle="The total number of messages submitted."></i>
             </span>
           </th>
     
           <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesDelivered">
-            <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Delivered
+            <span style="gap:8px;">Messages&nbsp;Delivered
               <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
                 nzTooltipTitle="Messages for which a delivery report was received."></i>
             </span>
           </th>
     
           <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesRead">
-            <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Read
+            <span style="gap:8px;">Messages&nbsp;Read
               <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
                 nzTooltipTitle="Total number of messages that were read."></i>
             </span>
           </th>
     
           <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnMessagesFailed">
-            <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Failed
+            <span style="gap:8px;">Failed/RCS&nbsp;Disabled Number
               <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
                 nzTooltipTitle="Messages that failed to send."></i>
             </span>
           </th>
     
           <th nzAlign="center" nzWidth="50%" [nzSortFn]="sortFnRevokedExpired">
-            <span style="display: flex; align-items: center; gap:8px;">Revoked/Expired
+            <span style="gap:8px;">Revoked/Expired
               <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
                 nzTooltipTitle="Messages that were revoked or expired."></i>
             </span>
           </th>
     
           <th nzAlign="center" nzWidth="37%" [nzSortFn]="sortFnP2Awaited">
-            <span style="display: flex; align-items: center; gap:8px;">Messages&nbsp;Awaited
+            <span style="gap:8px;">Messages&nbsp;Awaited
               <i nz-icon style="color: #ff0909;" nzType="info-circle" nz-tooltip
                 nzTooltipTitle="Messages still awaited."></i>
             </span>
@@ -412,7 +412,7 @@
           <th nzAlign="center"></th>
           <th nzAlign="center"></th>
           <th nzAlign="center">{{ totalRequest }}</th>
-          <th nzAlign="center">{{ operatorTotalSubmitted }}</th>
+          <th nzAlign="center">{{ totalSubmitted }}</th>
           <th nzAlign="center">{{ totalDelivered }}</th>
           <th nzAlign="center">{{ totalRead }}</th>
           <th nzAlign="center">{{ totalFailed }}</th>
@@ -429,18 +429,18 @@
             <td nzAlign="center" *ngIf="selectedOption == 'template'">{{ item.templateName }}</td>
             <td nzAlign="center" *ngIf="selectedOption == 'campaign'">{{ item.campaignName }}</td>
     
-            <td nzAlign="center">{{ item.userName || '-' }}</td>
+            <td *ngIf="role==='admin'|| role ==='reseller'" nzAlign="center">{{ item.userName || '-' }}</td>
             <td nzAlign="center">{{ item.summaryDate || '0' }}</td>
             <td nzAlign="center">{{ item.totalRequest || '0' }}</td>
-            <td nzAlign="center">{{ item.operatorTotalSubmitted || '0' }}</td>
+            <td nzAlign="center">{{ item.totalSubmitted || '0' }}</td>
             <td nzAlign="center">{{ item.totalDelivered || '0' }}</td>
             <td nzAlign="center">{{ item.totalRead || '0' }}</td>
             <td nzAlign="center">{{ item.totalFailed || '0' }}</td>
             <td nzAlign="center">{{ item.totalExpired || '0' }}</td>
             <td nzAlign="center">
               {{
-                ((item.totalSubmitted || 0) - ((item.operatorTotalSubmitted || 0) + (item.totalFailed || 0)) > 0)
-                  ? ((item.totalSubmitted || 0) - ((item.operatorTotalSubmitted || 0) + (item.totalFailed || 0)))
+                ((item.totalSubmitted || 0) - ((item.totalDelivered || 0) + (item.totalFailed || 0)) > 0)
+                  ? ((item.totalSubmitted || 0) - ((item.totalDelivered || 0) + (item.totalFailed || 0)))
                   : 0
               }}
             </td>

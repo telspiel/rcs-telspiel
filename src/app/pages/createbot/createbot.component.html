@@ -37,7 +37,7 @@
     >
       <thead> 
         <tr>
-          <th nzWidth="15%">User Name</th>
+          <th *ngIf="role==='admin'|| role ==='reseller'" nzWidth="15%">User Name</th>
           <th nzWidth="15%">Bot Name</th>
           <th nzWidth="10%">Bot Type</th>
           <th nzWidth="15%">Brand</th>
@@ -48,7 +48,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let bot of filteredData">
-          <td></td>
+          <td *ngIf="role==='admin'|| role ==='reseller'"></td>
           <td>{{ bot.botName }}</td>
           <td>{{ bot.botType }}</td>
           <td>{{ bot.brandName }}</td>
