@@ -468,6 +468,7 @@
        
 
       <!-- <div
+      <!-- <div
         nz-col
         [nzSpan]="8"
         *ngIf="addUserForm.get('dlrHandover')?.value === true"
@@ -516,86 +517,60 @@
             </nz-input-group>
           </nz-form-control>
         </nz-form-item>
-      </div>
-
-      <div
-        nz-col
-        [nzSpan]="8"
-        *ngIf="addUserForm.get('dlrHandover')?.value === true"
-      >
-        <nz-form-item>
-          <nz-form-label
-            [nzSpan]="6"
-            nzLabelAlign="left"
-            for="campaignFrequency"
-            >Dlr Handover Token<span style="color: red">*</span></nz-form-label
-          >
-          <nz-form-control [nzSpan]="14" nzErrorTip="Select Campaign Frequency">
-            <nz-input-group>
-              <input
-                type="text"
-                nz-input
-                formControlName="dlrAccessToken"
-                placeholder="Dlr Access Token"
-              />
-            </nz-input-group>
-          </nz-form-control>
-        </nz-form-item>
       </div> -->
 
-      <!-- FIELD 1: Dlr Callback Api Method -->
-        <div nz-col [nzSpan]="8" *ngIf="addUserForm.get('dlrHandover')?.value === true">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="10" nzLabelAlign="left">
-              Dlr Callback Api Method <span style="color: red">*</span>
-            </nz-form-label>
-            <nz-form-control [nzSpan]="14">
-              <nz-select
-                formControlName="dlrCallbackApiMethod"
-                nzPlaceHolder="Select method"
-              >
-                <nz-option nzValue="GET" nzLabel="GET"></nz-option>
-                <nz-option nzValue="POST" nzLabel="POST"></nz-option>
-              </nz-select>
-            </nz-form-control>
-          </nz-form-item>
-        </div>
+       <!-- FIELD 1: Dlr Callback Api Method -->
+       <div nz-col [nzSpan]="8" *ngIf="addUserForm.get('dlrHandover')?.value === true">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="10" nzLabelAlign="left">
+            Dlr Callback Api Method <span style="color: red">*</span>
+          </nz-form-label>
+          <nz-form-control [nzSpan]="14">
+            <nz-select
+              formControlName="dlrCallbackApiMethod"
+              nzPlaceHolder="Select method"
+            >
+              <nz-option nzValue="GET" nzLabel="GET"></nz-option>
+              <nz-option nzValue="POST" nzLabel="POST"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
 
-        <!-- FIELD 2: Dlr Callback Url -->
-        <div nz-col [nzSpan]="8" *ngIf="addUserForm.get('dlrHandover')?.value === true">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="8" nzLabelAlign="left">
-              Dlr Callback Url <span style="color: red">*</span>
-            </nz-form-label>
-            <nz-form-control [nzSpan]="16">
-              <input
-                type="text"
-                nz-input
-                formControlName="dlrCallbackUrl"
-                placeholder="Dlr Callback Url"
-              />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
+      <!-- FIELD 2: Dlr Callback Url -->
+      <div nz-col [nzSpan]="8" *ngIf="addUserForm.get('dlrHandover')?.value === true">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="8" nzLabelAlign="left">
+            Dlr Callback Url <span style="color: red">*</span>
+          </nz-form-label>
+          <nz-form-control [nzSpan]="16">
+            <input
+              type="text"
+              nz-input
+              formControlName="dlrCallbackUrl"
+              placeholder="Dlr Callback Url"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
 
-        <!-- FIELD 3: Dlr Access Token -->
-        <div nz-col [nzSpan]="8" *ngIf="addUserForm.get('dlrHandover')?.value === true">
-          <nz-form-item>
-            <nz-form-label [nzSpan]="8" nzLabelAlign="left">
-              Dlr Access Token <span style="color: red">*</span>
-            </nz-form-label>
-            <nz-form-control [nzSpan]="16">
-              <input
-                type="text"
-                nz-input
-                formControlName="dlrAccessToken"
-                placeholder="Dlr Access Token"
-              />
-            </nz-form-control>
-          </nz-form-item>
-        </div>
+      <!-- FIELD 3: Dlr Access Token -->
+      <div nz-col [nzSpan]="8" *ngIf="addUserForm.get('dlrHandover')?.value === true">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="8" nzLabelAlign="left">
+            Dlr Access Token <span style="color: red">*</span>
+          </nz-form-label>
+          <nz-form-control [nzSpan]="16">
+            <input
+              type="text"
+              nz-input
+              formControlName="dlrAccessToken"
+              placeholder="Dlr Access Token"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
 
-        <!-- --------------------------------------------------------------------------------- -->
 
       <div nz-col [nzSpan]="24">
         <nz-form-item>
