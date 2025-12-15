@@ -416,34 +416,69 @@ getNzExtraText(): string {
   }
   return '';
 }
-
-// Helper method to check if template is selected
-isTemplateSelected(): boolean {
-  return this.customvariable && this.customvariable.length > 0;
-}
-
-mobileNumberValidator(control: AbstractControl): ValidationErrors | null {
-  const raw = control.value || '';
-  const numbers = raw
-    .split(/[\n, ]+/)
-    .map((num: string) => num.trim()
-      .replace(/^\+?91/, '') // Remove leading '+91' or '91'
-      .replace(/^0/, '')  
-      .replace(/^\+/, ''))   // Remove leading '+' if present (for other country codes)
-    .filter((num: string) => num !== '');
-
-  const validRegex = /^(?!1234567890)\d{10}$/;
-  const validNumbers = numbers.filter((num: string) => validRegex.test(num));
-
-  if (validNumbers.length > 100) {
-    return { tooMany: true };
+  // Helper method to check if template is selected
+  isTemplateSelected(): boolean {
+    return this.customvariable && this.customvariable.length > 0;
   }
+  mobileNumberValidator(control: AbstractControl): ValidationErrors | null {
+    const raw = control.value || '';
 
-  if (validNumbers.length !== numbers.length) {
-    return { invalidFormat: true };
+    const numbers = raw
+      .split(/[\n, ]+/)
+      .map((num: string) => num.trim().replace(/\r/g, ''))
+      .filter((num: string) => num !== '');
+
+    const processed = numbers.map((num: string) => {
+      const original = num;
+
+      // If exactly 10 digits → leave as is
+      if (/^\d{10}$/.test(original)) {
+        return original;
+      }
+
+      // Only clean if starts with +91, 91, or 0
+      return original
+        .replace(/^\+91/, '')
+        .replace(/^91/, '')
+        .replace(/^0/, '');
+    });
+
+    const validRegex = /^(?!1234567890)\d{10}$/;
+
+    const validNumbers = processed.filter((num: string) => validRegex.test(num));
+
+    if (validNumbers.length > 100) {
+      return { tooMany: true };
+    }
+
+    if (validNumbers.length !== processed.length) {
+      return { invalidFormat: true };
+    }
+
+    return null;
   }
-  return null;
-}
+// mobileNumberValidator(control: AbstractControl): ValidationErrors | null {
+//   const raw = control.value || '';
+//   const numbers = raw
+//     .split(/[\n, ]+/)
+//     .map((num: string) => num.trim()
+//       .replace(/^\+?91/, '') // Remove leading '+91' or '91'
+//       .replace(/^0/, '')  
+//       .replace(/^\+/, ''))   // Remove leading '+' if present (for other country codes)
+//     .filter((num: string) => num !== '');
+
+//   const validRegex = /^(?!1234567890)\d{10}$/;
+//   const validNumbers = numbers.filter((num: string) => validRegex.test(num));
+
+//   if (validNumbers.length > 100) {
+//     return { tooMany: true };
+//   }
+
+//   if (validNumbers.length !== numbers.length) {
+//     return { invalidFormat: true };
+//   }
+//   return null;
+// }
 
 onMobileInputChange(): void {
   const raw = this.quickCampaign.get('mobileNumbers')?.value || '';
@@ -1890,17 +1925,25 @@ open(): void {
         botId: formValues?.botIds,
         botName: this.selectedBot.botName,
 mobileNumbers: formValues.mobileNumbers
-  ? formValues.mobileNumbers
-      .split(/[\n, ]+/)
-      .map((num: string) =>
-        num
-          .trim()
-          .replace(/^\+?91/, '') // remove +91 or 91
-          .replace(/^0/, '')     // remove leading 0
-          .replace(/^\+/, '')    // remove any other +
-      )
-      .filter((num: string) => num !== '' && /^\d+$/.test(num))
-  : this.mobileNumArray?this.mobileNumArray: [],
+        ? formValues.mobileNumbers
+          .split(/[\n, ]+/)
+          .map((num: string) => {
+            const trimmed = num.trim();
+
+            // If exactly 10 digits → leave as is
+            if (/^\d{10}$/.test(trimmed)) {
+              return trimmed;
+            }
+
+            // Otherwise, clean
+            return trimmed
+              .replace(/^\+91/, '') // remove +91
+              .replace(/^91/, '')   // remove 91
+              .replace(/^0/, '')    // remove leading 0
+              .replace(/^\+/, '');  // remove other +
+          })
+          .filter((num: string) => num !== '' && /^\d+$/.test(num))
+        : this.mobileNumArray ? this.mobileNumArray : [],
 
         // isSmsFallback: formValues.fallback,
         // isWhatsappFallback: formValues.whatsapp,
